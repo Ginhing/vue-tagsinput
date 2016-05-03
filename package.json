@@ -1,0 +1,24 @@
+{
+  "name": "vue-tagsinput",
+  "version": "0.0.1",
+  "description": "a tags input component based on Vue.js",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Ginhing/vue-tagsinput.git"
+  },
+  "keywords": [
+    "tagsinput",
+    "vue",
+    "input"
+  ],
+  "author": "Ginhing",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Ginhing/vue-tagsinput/issues"
+  },
+  "homepage": "https://github.com/Ginhing/vue-tagsinput#readme"
+}
