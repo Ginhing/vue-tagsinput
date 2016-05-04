@@ -7,7 +7,8 @@ var config = {
     entry: './src/index.js',
     output: {
         path: path.resolve(__dirname, 'dist/'),
-        filename: 'vue-tagsinput.js'
+        filename: 'vue-tagsinput.js',
+        libraryTarget: 'commonjs'
     },
     module: {
         loaders: [
@@ -31,6 +32,9 @@ var config = {
 
 // for production build
 if (TARGET === 'build') {
+    config.externals = {
+        vue: 'commonjs vue'
+    },
     config.babel.plugins.push('transform-runtime')
     config.plugins.push(
         new webpack.DefinePlugin({

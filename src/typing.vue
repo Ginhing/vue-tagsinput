@@ -6,7 +6,7 @@
         @blur="finish"
         :style="{width: 1 + charLen(text) + 'ch'}" />
     <span v-else
-        class="gap" @click.self="begin">&nbsp;</span>
+        class="gap" @click="begin">&nbsp;</span>
 </template>
 <style scoped>
 input {

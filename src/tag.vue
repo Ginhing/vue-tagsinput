@@ -1,7 +1,7 @@
 <template>
     <span class="tag">
         {{item.text}}
-        <span class="remove hl-click" @click.stop="remove(item)"></span>
+        <span class="remove hl-click" @click="remove(item)"></span>
     </span>
 </template>
 <style scoped>
