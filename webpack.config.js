@@ -39,7 +39,7 @@ if (TARGET === 'build') {
             }
         })
     )
-} else if (TARGET === 'dev') {
+} else if (TARGET === 'dev' || TARGET === 'build_dev') {
     config = Object.assign(config, {
         entry: './src/example.js',
         output: {
