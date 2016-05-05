@@ -1,8 +1,8 @@
 <template>
     <div class="tags-input" @click.self="inputNew">
-        <template v-for="(index, item) in tags">
+        <template v-for="(index, item) in tags" :track-by="trackBy">
             <typing :index="index"></typing>
-            <tag :item="item" :remove="removeTag"></tag>
+            <tag :text="item | getText" :remove="item | getRemoveHandle index"></tag>
         </template>
         <typing :index="tags.length" :typing.sync="lastInput"></typing>
     </div>
@@ -12,6 +12,7 @@
     box-shadow: 0 0 2px rgba(0, 0, 0, 0.19);
     display: flex;
     flex-direction: row;
+    flex-wrap: wrap;
 }
 </style>
 <script>
@@ -20,7 +21,23 @@
             tags: {
                 twoWay: true,
                 type: Array,
-                default: () => []
+                required: true
+            },
+            insert: {
+                type: Function,
+                default: text => text
+            },
+            render: {
+                type: Function,
+                default: item => item
+            },
+            readOnly: {
+                type: Function,
+                default: item => false
+            },
+            trackBy: {
+                type: String,
+                default: '$index'
             }
         },
         data() {
@@ -30,16 +47,31 @@
         },
         events: {
             typingFinish(text, index) {
-                this.tags.splice(index, 0, {text})
+                let tag = this.insert(text)
+                !this.dedupe(tag) && this.tags.splice(index, 0, tag)
             }
         },
         methods: {
-            removeTag(item) {
-                let index = this.tags.indexOf(item)
+            removeTag(index) {
                 index > -1 && this.tags.splice(index, 1)
             },
             inputNew() {
                 this.lastInput = true
+            },
+            dedupe(tag) {
+                if (this.trackBy === '$index') return this.tags.includes(tag)
+                else {
+                    let field = tag[this.trackBy]
+                    return this.tags.some(item => item[this.trackBy] === field)
+                }
+            }
+        },
+        filters: {
+            getText(item) {
+                return this.render(item)
+            },
+            getRemoveHandle(item, index) {
+                return this.readOnly(item) ? null : this.removeTag.bind(this, index)
             }
         },
         components:{

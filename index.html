@@ -6,7 +6,13 @@
 </head>
 <body>
     <div id="example">
-        <tags-input :tags.sync="tags"></tags-input>
+        <tags-input
+            :tags.sync="tags"
+            :insert="insertTag"
+            :render="renderTag"
+            :read-only="setRO"
+            track-by="text"
+        ></tags-input>
     </div>
     <script src="example.js"></script>
 </body>

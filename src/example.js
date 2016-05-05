@@ -3,7 +3,22 @@ import Vue from 'vue'
 new Vue({
     el: '#example',
     data() {
-        return {tags: [{text: 'hello'}, {text: 'world'}]}
+        return {
+            id: 1,
+            tags: [{text: 'hello', id:0}, {text: 'world', id:1}],
+        }
+    },
+    methods: {
+        insertTag(text) {
+            this.id += 1
+            return {id: this.id, text}
+        },
+        renderTag(item) {
+            return `**${item.text}**`
+        },
+        setRO(item) {
+            return item.id % 2 === 1
+        }
     },
     components: {
         'tags-input': require('./input.vue')

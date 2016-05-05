@@ -1,7 +1,10 @@
 <template>
     <span class="tag">
-        {{item.text}}
-        <span class="remove hl-click" @click="remove(item)"></span>
+        {{text}}
+        <span v-if="remove"
+            class="remove hl-click"
+            @click="remove">
+        </span>
     </span>
 </template>
 <style scoped>
@@ -22,6 +25,6 @@
 </style>
 <script>
 export default {
-    props: ['item', 'remove']
+    props: ['text', 'remove']
 }
 </script>
