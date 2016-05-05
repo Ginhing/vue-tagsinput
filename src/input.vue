@@ -1,10 +1,13 @@
 <template>
-    <div class="tags-input" @click.self="inputNew">
+    <div class="tags-input" @click.self="inputLast">
         <template v-for="(index, item) in tags" :track-by="trackBy">
             <typing :index="index"></typing>
-            <tag :text="item | getText" :remove="item | getRemoveHandle index"></tag>
+            <tag
+                :text="item | getText"
+                :remove="item | getRemoveHandle index">
+            </tag>
         </template>
-        <typing :index="tags.length" :typing.sync="lastInput"></typing>
+        <typing :index="length"></typing>
     </div>
 </template>
 <style scoped>
@@ -16,6 +19,8 @@
 }
 </style>
 <script>
+import Vue from 'vue'
+import {E} from './lib'
     export default {
         props: {
             tags: {
@@ -40,23 +45,32 @@
                 default: '$index'
             }
         },
-        data() {
-            return {
-                lastInput: false
+        computed: {
+            length() {
+                return this.tags.length
             }
         },
         events: {
-            typingFinish(text, index) {
+            [E`insert`](index, text) {
                 let tag = this.insert(text)
                 !this.dedupe(tag) && this.tags.splice(index, 0, tag)
-            }
+            },
+            [E`activeOther`](index) {
+                index >= 0
+                && index <= this.length
+                && this.$broadcast(E`active`, index)
+            },
+            [E`remove`]: 'removeTag'
         },
         methods: {
             removeTag(index) {
-                index > -1 && this.tags.splice(index, 1)
+                if (index > -1) {
+                    let canRM = !this.readOnly(this.tags[index])
+                    canRM && this.tags.splice(index, 1)
+                }
             },
-            inputNew() {
-                this.lastInput = true
+            inputLast() {
+                this.$broadcast(E`active`, this.length)
             },
             dedupe(tag) {
                 if (this.trackBy === '$index') return this.tags.includes(tag)

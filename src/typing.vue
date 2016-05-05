@@ -4,6 +4,7 @@
         type="text"
         v-model="text"
         @blur="finish"
+        @keydown="keyPress"
         :style="{width: 1 + charLen(text) + 'ch'}" />
     <span v-else
         class="gap" @click="begin">&nbsp;</span>
@@ -23,19 +24,17 @@ input {
 </style>
 <script>
 import Vue from 'vue'
+import {KEY_CODE, E} from './lib'
 export default {
     props: {
         index: {
             type: Number,
             required: true
-        },
-        typing: {
-            type: Boolean,
-            default: false
         }
     },
     data() {
         return {
+            typing: false,
             text: ''
         }
     },
@@ -44,12 +43,18 @@ export default {
             val && Vue.nextTick(_ => this.$els.input.focus())
         }
     },
+    events: {
+        [E`active`](index) {
+            this.typing = index === this.index
+        }
+    },
     methods: {
         begin() {
             this.typing = true
         },
         finish() {
-            this.text && this.$dispatch('typingFinish', this.text, this.index)
+            let result = this.text.trim()
+            result && this.$dispatch(E`insert`, this.index, result)
             this.typing = false
             this.text = ''
         },
@@ -59,6 +64,21 @@ export default {
                 charNum += str.charCodeAt(i) > 127 ? 2 : 1
             }
             return charNum
+        },
+        keyPress(e) {
+            let $input = this.$els.input
+            let cursor = $input.selectionStart
+            let key = e.keyCode
+            let native = false
+            if (key === KEY_CODE.RIGHT && cursor === $input.value.length) {
+                this.$dispatch(E`activeOther`, this.index + 1)
+            } else if (key === KEY_CODE.LEFT && cursor === 0) {
+                this.$dispatch(E`activeOther`, this.index - 1)
+            } else if (key === KEY_CODE.BACKSPACE && cursor === 0) {
+                this.$dispatch(E`remove`, this.index - 1)
+            } else native = true
+
+            !native && e.preventDefault()
         }
     }
 }

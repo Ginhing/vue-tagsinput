@@ -17,7 +17,7 @@ new Vue({
             return `**${item.text}**`
         },
         setRO(item) {
-            return item.id % 2 === 1
+            return item.id === 0
         }
     },
     components: {
