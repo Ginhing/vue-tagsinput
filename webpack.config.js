@@ -13,7 +13,7 @@ var config = {
     module: {
         loaders: [
             {test: /\.js$/, include: path.resolve(__dirname, 'src/'), loader: 'babel'},
-            {test: /\.(c|sc)ss$/, loader: 'style!css!sass'},
+            {test: /\.css$/, loader: 'style!css'},
             {test: /\.vue$/, loader: 'vue'},
         ]
     },
