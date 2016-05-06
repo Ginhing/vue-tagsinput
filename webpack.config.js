@@ -43,11 +43,11 @@ if (TARGET === 'build') {
             }
         })
     )
-} else if (TARGET === 'dev' || TARGET === 'build_dev') {
+} else if (TARGET === 'dev' || TARGET === 'build_example') {
     config = Object.assign(config, {
         entry: './src/example.js',
         output: {
-            path: path.resolve(__dirname),
+            path: path.resolve(__dirname, 'example'),
             filename: 'example.js'
         }
     })
