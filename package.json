@@ -9,7 +9,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "webpack",
-    "build_example": "webpack && cp index.html example/",
+    "build:example": "webpack && cp index.html example/",
     "dev": "webpack-dev-server --hot --inline"
   },
   "repository": {
