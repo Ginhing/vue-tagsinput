@@ -68,14 +68,19 @@ export default {
         keyPress(e) {
             let $input = this.$els.input
             let cursor = $input.selectionStart
+            let valLen = $input.value.length
             let key = e.keyCode
             let native = false
-            if (key === KEY_CODE.RIGHT && cursor === $input.value.length) {
-                this.$dispatch(E`activeOther`, this.index + 1)
+
+            if (key === KEY_CODE.RIGHT && cursor === valLen) {
+                valLen === 0 && this.$dispatch(E`activeOther`, this.index + 1)
             } else if (key === KEY_CODE.LEFT && cursor === 0) {
-                this.$dispatch(E`activeOther`, this.index - 1)
+                valLen === 0 && this.$dispatch(E`activeOther`, this.index - 1)
             } else if (key === KEY_CODE.BACKSPACE && cursor === 0) {
                 this.$dispatch(E`remove`, this.index - 1)
+            } else if (key === KEY_CODE.TAB) {
+                this.finish()
+                this.$dispatch(E`activeOther`, this.index)
             } else native = true
 
             !native && e.preventDefault()

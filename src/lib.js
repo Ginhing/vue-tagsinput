@@ -1,6 +1,7 @@
 export const KEY_CODE = {
     LEFT: 37,
     RIGHT: 39,
+    TAB: 9,
     BACKSPACE: 8
 }
 

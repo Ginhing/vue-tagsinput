@@ -19,7 +19,6 @@
 }
 </style>
 <script>
-import Vue from 'vue'
 import {E} from './lib'
     export default {
         props: {
