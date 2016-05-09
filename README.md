@@ -22,7 +22,9 @@
     ></tags-input>
 </div>
 ```
-[example $vm here](src/example.js)
+
+## Example
+[Live example](http://www.webpackbin.com/4J2rbEYZZ)
 
 ## Props
 - tags(array, required): to contain your tags
