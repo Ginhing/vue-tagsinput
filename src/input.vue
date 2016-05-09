@@ -7,7 +7,9 @@
                 :remove="item | getRemoveHandle index">
             </tag>
         </template>
-        <typing :index="length"></typing>
+        <typing :index="length">
+            <span v-if="placeholder" :class="klass.placeholder">{{placeholder}}</span>
+        </typing>
     </div>
 </template>
 <style scoped>
@@ -19,6 +21,13 @@
     box-shadow: 0 0 2px rgba(0, 0, 0, 0.3);
     min-height: 28px;
 }
+.placeholder {
+    color: #A9A9A9;
+    font-size: 0.8em;
+    line-height: 2em;
+    white-space: nowrap;
+    padding-left: 0.5em;
+}
 </style>
 <script>
 import {E, klass} from './lib'
@@ -29,26 +38,12 @@ export default {
             type: Array,
             required: true
         },
-        klass: {
-            type: Object,
-            default: () => klass
-        },
-        insert: {
-            type: Function,
-            default: text => text
-        },
-        render: {
-            type: Function,
-            default: item => item
-        },
-        readOnly: {
-            type: Function,
-            default: item => false
-        },
-        trackBy: {
-            type: String,
-            default: '$index'
-        }
+        placeholder: {type: String},
+        klass: {type: Object, default: () => klass},
+        insert: {type: Function, default: text => text},
+        render: {type: Function, default: item => item},
+        readOnly: {type: Function, default: item => false},
+        trackBy: {type: String, default: '$index'}
     },
     computed: {
         length() {

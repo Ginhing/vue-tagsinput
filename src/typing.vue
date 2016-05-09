@@ -8,7 +8,9 @@
         @keydown="keyPress"
         :style="{width: 2 + charLen(text) + 'ch'}" />
     <span v-else
-        :class="klass.gap" @click="begin">&nbsp;</span>
+        :class="klass.gap" @click="begin">
+        <slot></slot>
+    </span>
 </template>
 <style scoped>
 input.input {
@@ -21,6 +23,7 @@ input.input {
 }
 .gap {
     flex-basis: 7px;
+    min-height: 1em;
 }
 </style>
 <script>

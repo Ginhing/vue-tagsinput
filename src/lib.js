@@ -14,5 +14,6 @@ export const klass = {
     container: 'tags-input',
     input: 'input',
     gap: 'gap',
-    tag: 'tag'
+    tag: 'tag',
+    placeholder: 'placeholder'
 }
