@@ -32,6 +32,10 @@
 - readOnly(func): set your tag-object read only or not
 - trackBy(string): a field of tag-object to dedupe.
 
+## Events
+- focus.vue-tagsinput
+- blur.vue-tagsinput
+
 ## Class Names
 ```javascript
 {
