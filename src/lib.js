@@ -7,7 +7,7 @@ export const KEY_CODE = {
 
 //inner event name parser
 export function E(str, ...vals) {
-    return `_vti_${str[0]}`
+    return `${str[0]}.vue-tagsinput`
 }
 
 export const klass = {

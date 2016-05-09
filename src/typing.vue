@@ -46,7 +46,11 @@ export default {
     },
     watch: {
         typing(val) {
-            val && Vue.nextTick(_ => this.$els.input.focus())
+            val && Vue.nextTick(_ => {
+                let $el = this.$els.input
+                this.$dispatch(E`focus`, $el)
+                $el.focus()
+            })
         }
     },
     events: {
@@ -58,11 +62,12 @@ export default {
         begin() {
             this.typing = true
         },
-        finish() {
+        finish(inactive = true) {
             let result = this.text.trim()
             result && this.$dispatch(E`insert`, this.index, result)
-            this.typing = false
             this.text = ''
+            this.typing = !inactive
+            inactive && this.$dispatch(E`blur`, this.$els.input)
         },
         charLen(str) {
             let charNum = 0
@@ -85,8 +90,7 @@ export default {
             } else if (key === KEY_CODE.BACKSPACE && cursor === 0) {
                 this.$dispatch(E`remove`, this.index - 1)
             } else if (key === KEY_CODE.TAB) {
-                this.finish()
-                this.$dispatch(E`activeOther`, this.index)
+                this.finish(false)
             } else native = true
 
             !native && e.preventDefault()

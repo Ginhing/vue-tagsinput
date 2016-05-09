@@ -8,6 +8,14 @@ new Vue({
             tags: [{text: 'hello', id:0}, {text: 'world', id:1}],
         }
     },
+    events: {
+        'focus.vue-tagsinput'($el) {
+            console.log('active');
+        },
+        'blur.vue-tagsinput'($el) {
+            console.log(`inactive input with value: ${$el.value}`);
+        }
+    },
     methods: {
         insertTag(text) {
             this.id += 1

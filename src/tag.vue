@@ -15,6 +15,9 @@
     font-weight: normal;
     font-size: 12px;
 }
+.remove {
+    cursor: pointer;
+}
 .remove::after{
     color: rgba(0, 0, 0, 0.6);
     content: "\2a2f";
