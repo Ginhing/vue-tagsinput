@@ -4,7 +4,8 @@
 [npm-image]: https://img.shields.io/npm/v/vue-tagsinput.svg
 [npm-url]: https://npmjs.org/package/vue-tagsinput
 
-![](pic.png)
+>kerboard supported(left, right, backspace, tab).
+![](anim.gif)
 
 ## Requirement
 - vue: `>= 1.0.0`
