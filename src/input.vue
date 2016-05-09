@@ -58,7 +58,7 @@ export default {
     events: {
         [E`insert`](index, text) {
             let tag = this.insert(text)
-            !this.dedupe(tag) && this.tags.splice(index, 0, tag)
+            tag && !this.dedupe(tag) && this.tags.splice(index, 0, tag)
         },
         [E`activeOther`](index) {
             index >= 0

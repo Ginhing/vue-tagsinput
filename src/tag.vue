@@ -14,6 +14,7 @@
     color: #858585;
     font-weight: normal;
     font-size: 12px;
+    padding: 0 0.5ch;
 }
 .remove {
     cursor: pointer;
