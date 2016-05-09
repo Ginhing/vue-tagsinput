@@ -1,5 +1,6 @@
 <template>
     <input v-if="typing"
+        :class="klass.input"
         v-el:input
         type="text"
         v-model="text"
@@ -7,10 +8,10 @@
         @keydown="keyPress"
         :style="{width: 1 + charLen(text) + 'ch'}" />
     <span v-else
-        class="gap" @click="begin">&nbsp;</span>
+        :class="klass.gap" @click="begin">&nbsp;</span>
 </template>
 <style scoped>
-input {
+input.input {
     outline: none;
     box-shadow: none;
     border: none;
@@ -36,6 +37,11 @@ export default {
         return {
             typing: false,
             text: ''
+        }
+    },
+    computed: {
+        klass() {
+            return this.$parent.klass
         }
     },
     watch: {

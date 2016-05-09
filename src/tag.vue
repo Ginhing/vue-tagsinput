@@ -1,5 +1,5 @@
 <template>
-    <span class="tag">
+    <span :class="klass.tag">
         {{text}}
         <span v-if="remove"
             class="remove hl-click"
@@ -9,10 +9,11 @@
 </template>
 <style scoped>
 .tag {
-    border-radius: 5px;
-    border: 1px solid red;
-    background-color: rgb(250, 227, 92);
-    font-size: 14px;
+    border: 1px solid #e0e0e0;
+    border-radius: 3px;
+    color: #858585;
+    font-weight: normal;
+    font-size: 12px;
 }
 .remove::after{
     color: rgba(0, 0, 0, 0.6);
@@ -25,6 +26,19 @@
 </style>
 <script>
 export default {
-    props: ['text', 'remove']
+    props: {
+        text: {
+            type: String,
+            required: true
+        },
+        remove: {
+            type: Function
+        }
+    },
+    computed: {
+        klass() {
+            return this.$parent.klass
+        }
+    }
 }
 </script>

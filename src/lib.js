@@ -9,3 +9,10 @@ export const KEY_CODE = {
 export function E(str, ...vals) {
     return `_vti_${str[0]}`
 }
+
+export const klass = {
+    container: 'tags-input',
+    input: 'input',
+    gap: 'gap',
+    tag: 'tag'
+}

@@ -1,5 +1,5 @@
 <template>
-    <div class="tags-input" @click.self="inputLast">
+    <div :class="klass.container" @click.self="inputLast">
         <template v-for="(index, item) in tags" :track-by="trackBy">
             <typing :index="index"></typing>
             <tag
@@ -12,20 +12,26 @@
 </template>
 <style scoped>
 .tags-input {
-    box-shadow: 0 0 2px rgba(0, 0, 0, 0.19);
     display: flex;
     flex-direction: row;
+    align-items: center;
     flex-wrap: wrap;
+    box-shadow: 0 0 2px rgba(0, 0, 0, 0.3);
+    min-height: 28px;
 }
 </style>
 <script>
-import {E} from './lib'
+import {E, klass} from './lib'
 export default {
     props: {
         tags: {
             twoWay: true,
             type: Array,
             required: true
+        },
+        klass: {
+            type: Object,
+            default: () => klass
         },
         insert: {
             type: Function,
