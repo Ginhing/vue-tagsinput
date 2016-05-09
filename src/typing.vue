@@ -6,7 +6,7 @@
         v-model="text"
         @blur="finish"
         @keydown="keyPress"
-        :style="{width: 1 + charLen(text) + 'ch'}" />
+        :style="{width: 2 + charLen(text) + 'ch'}" />
     <span v-else
         :class="klass.gap" @click="begin">&nbsp;</span>
 </template>
