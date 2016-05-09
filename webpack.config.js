@@ -24,7 +24,7 @@ var config = {
     },
     vue: {
         loaders: {
-            scss: 'style!css!sass'
+            scss: 'style!css'
         }
     },
     devtool: '#cheap-source-map'
@@ -35,7 +35,7 @@ if (TARGET === 'build') {
     config.externals = {
         vue: 'commonjs vue'
     },
-    config.babel.plugins.push('transform-runtime')
+    // config.babel.plugins.push('transform-runtime')
     config.plugins.push(
         new webpack.DefinePlugin({
             'process.env': {

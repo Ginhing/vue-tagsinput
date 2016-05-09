@@ -55,10 +55,16 @@
 	var __vue_script__, __vue_template__
 	__webpack_require__(2)
 	__vue_script__ = __webpack_require__(6)
-	__vue_template__ = __webpack_require__(18)
+	if (__vue_script__ &&
+	    __vue_script__.__esModule &&
+	    Object.keys(__vue_script__).length > 1) {
+	  console.warn("[vue-loader] src/input.vue: named exports in *.vue files are ignored.")}
+	__vue_template__ = __webpack_require__(19)
 	module.exports = __vue_script__ || {}
 	if (module.exports.__esModule) module.exports = module.exports.default
-	if (__vue_template__) { (typeof module.exports === "function" ? module.exports.options : module.exports).template = __vue_template__ }
+	if (__vue_template__) {
+	(typeof module.exports === "function" ? (module.exports.options || (module.exports.options = {})) : module.exports).template = __vue_template__
+	}
 	if (false) {(function () {  module.hot.accept()
 	  var hotAPI = require("vue-hot-reload-api")
 	  hotAPI.install(require("vue"), true)
@@ -87,8 +93,8 @@
 	if(false) {
 		// When the styles change, update the <style> tags
 		if(!content.locals) {
-			module.hot.accept("!!./../node_modules/css-loader/index.js!./../node_modules/vue-loader/lib/style-rewriter.js?id=_v-607a9ed3&file=input.vue&scoped=true!./../node_modules/vue-loader/lib/selector.js?type=style&index=0!./input.vue", function() {
-				var newContent = require("!!./../node_modules/css-loader/index.js!./../node_modules/vue-loader/lib/style-rewriter.js?id=_v-607a9ed3&file=input.vue&scoped=true!./../node_modules/vue-loader/lib/selector.js?type=style&index=0!./input.vue");
+			module.hot.accept("!!./../node_modules/css-loader/index.js!./../node_modules/vue-loader/lib/style-rewriter.js?id=_v-607a9ed3&scoped=true!./../node_modules/vue-loader/lib/selector.js?type=style&index=0!./input.vue", function() {
+				var newContent = require("!!./../node_modules/css-loader/index.js!./../node_modules/vue-loader/lib/style-rewriter.js?id=_v-607a9ed3&scoped=true!./../node_modules/vue-loader/lib/selector.js?type=style&index=0!./input.vue");
 				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
 				update(newContent);
 			});
@@ -106,7 +112,7 @@
 
 
 	// module
-	exports.push([module.id, "\n.tags-input[_v-607a9ed3] {\n    box-shadow: 0 0 2px rgba(0, 0, 0, 0.19);\n    display: -webkit-box;\n    display: -webkit-flex;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-orient: horizontal;\n    -webkit-box-direction: normal;\n    -webkit-flex-direction: row;\n        -ms-flex-direction: row;\n            flex-direction: row;\n}\n", ""]);
+	exports.push([module.id, "\n.tags-input[_v-607a9ed3] {\n    display: -webkit-box;\n    display: -webkit-flex;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-orient: horizontal;\n    -webkit-box-direction: normal;\n    -webkit-flex-direction: row;\n        -ms-flex-direction: row;\n            flex-direction: row;\n    -webkit-box-align: center;\n    -webkit-align-items: center;\n        -ms-flex-align: center;\n            align-items: center;\n    -webkit-flex-wrap: wrap;\n        -ms-flex-wrap: wrap;\n            flex-wrap: wrap;\n    box-shadow: 0 0 2px rgba(0, 0, 0, 0.3);\n    min-height: 28px;\n}\n", ""]);
 
 	// exports
 
@@ -306,13 +312,6 @@
 		return styleElement;
 	}
 
-	function createLinkElement(options) {
-		var linkElement = document.createElement("link");
-		linkElement.rel = "stylesheet";
-		insertStyleElement(options, linkElement);
-		return linkElement;
-	}
-
 	function addStyle(obj, options) {
 		var styleElement, update, remove;
 
@@ -321,19 +320,6 @@
 			styleElement = singletonElement || (singletonElement = createStyleElement(options));
 			update = applyToSingletonTag.bind(null, styleElement, styleIndex, false);
 			remove = applyToSingletonTag.bind(null, styleElement, styleIndex, true);
-		} else if(obj.sourceMap &&
-			typeof URL === "function" &&
-			typeof URL.createObjectURL === "function" &&
-			typeof URL.revokeObjectURL === "function" &&
-			typeof Blob === "function" &&
-			typeof btoa === "function") {
-			styleElement = createLinkElement(options);
-			update = updateLink.bind(null, styleElement);
-			remove = function() {
-				removeStyleElement(styleElement);
-				if(styleElement.href)
-					URL.revokeObjectURL(styleElement.href);
-			};
 		} else {
 			styleElement = createStyleElement(options);
 			update = applyToTag.bind(null, styleElement);
@@ -384,12 +370,21 @@
 	function applyToTag(styleElement, obj) {
 		var css = obj.css;
 		var media = obj.media;
+		var sourceMap = obj.sourceMap;
 
-		if(media) {
-			styleElement.setAttribute("media", media)
+		if (media) {
+			styleElement.setAttribute("media", media);
 		}
 
-		if(styleElement.styleSheet) {
+		if (sourceMap) {
+			// https://developer.chrome.com/devtools/docs/javascript-debugging
+			// this makes source maps inside style tags work properly in Chrome
+			css += '\n/*# sourceURL=' + sourceMap.sources[0] + ' */';
+			// http://stackoverflow.com/a/26603875
+			css += "\n/*# sourceMappingURL=data:application/json;base64," + btoa(unescape(encodeURIComponent(JSON.stringify(sourceMap)))) + " */";
+		}
+
+		if (styleElement.styleSheet) {
 			styleElement.styleSheet.cssText = css;
 		} else {
 			while(styleElement.firstChild) {
@@ -397,25 +392,6 @@
 			}
 			styleElement.appendChild(document.createTextNode(css));
 		}
-	}
-
-	function updateLink(linkElement, obj) {
-		var css = obj.css;
-		var sourceMap = obj.sourceMap;
-
-		if(sourceMap) {
-			// http://stackoverflow.com/a/26603875
-			css += "\n/*# sourceMappingURL=data:application/json;base64," + btoa(unescape(encodeURIComponent(JSON.stringify(sourceMap)))) + " */";
-		}
-
-		var blob = new Blob([css], { type: "text/css" });
-
-		var oldSrc = linkElement.href;
-
-		linkElement.href = URL.createObjectURL(blob);
-
-		if(oldSrc)
-			URL.revokeObjectURL(oldSrc);
 	}
 
 
@@ -428,71 +404,180 @@
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
 	});
-	// <template>
-	//     <div class="tags-input" @click.self="inputNew">
-	//         <template v-for="(index, item) in tags">
+
+	var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol ? "symbol" : typeof obj; };
+
+	var _events;
+
+	var _templateObject = _taggedTemplateLiteral(['insert'], ['insert']),
+	    _templateObject2 = _taggedTemplateLiteral(['activeOther'], ['activeOther']),
+	    _templateObject3 = _taggedTemplateLiteral(['active'], ['active']),
+	    _templateObject4 = _taggedTemplateLiteral(['remove'], ['remove']);
+
+	var _lib = __webpack_require__(7);
+
+	function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+	function _taggedTemplateLiteral(strings, raw) { return Object.freeze(Object.defineProperties(strings, { raw: { value: Object.freeze(raw) } })); } // <template>
+	//     <div :class="klass.container" @click.self="inputLast">
+	//         <template v-for="(index, item) in tags" :track-by="trackBy">
 	//             <typing :index="index"></typing>
-	//             <tag :item="item" :remove="removeTag"></tag>
+	//             <tag
+	//                 :text="item | getText"
+	//                 :remove="item | getRemoveHandle index">
+	//             </tag>
 	//         </template>
-	//         <typing :index="tags.length" :typing.sync="lastInput"></typing>
+	//         <typing :index="length"></typing>
 	//     </div>
 	// </template>
 	// <style scoped>
 	// .tags-input {
-	//     box-shadow: 0 0 2px rgba(0, 0, 0, 0.19);
 	//     display: flex;
 	//     flex-direction: row;
+	//     align-items: center;
+	//     flex-wrap: wrap;
+	//     box-shadow: 0 0 2px rgba(0, 0, 0, 0.3);
+	//     min-height: 28px;
 	// }
 	// </style>
 	// <script>
+
+
 	exports.default = {
 	    props: {
 	        tags: {
 	            twoWay: true,
 	            type: Array,
+	            required: true
+	        },
+	        klass: {
+	            type: Object,
 	            default: function _default() {
-	                return [];
+	                return _lib.klass;
+	            }
+	        },
+	        insert: {
+	            type: Function,
+	            default: function _default(text) {
+	                return text;
+	            }
+	        },
+	        render: {
+	            type: Function,
+	            default: function _default(item) {
+	                return item;
+	            }
+	        },
+	        readOnly: {
+	            type: Function,
+	            default: function _default(item) {
+	                return false;
+	            }
+	        },
+	        trackBy: {
+	            type: String,
+	            default: '$index'
+	        }
+	    },
+	    computed: {
+	        length: function length() {
+	            return this.tags.length;
+	        }
+	    },
+	    events: (_events = {}, _defineProperty(_events, (0, _lib.E)(_templateObject), function (index, text) {
+	        var tag = this.insert(text);
+	        !this.dedupe(tag) && this.tags.splice(index, 0, tag);
+	    }), _defineProperty(_events, (0, _lib.E)(_templateObject2), function (index) {
+	        index >= 0 && index <= this.length && this.$broadcast((0, _lib.E)(_templateObject3), index);
+	    }), _defineProperty(_events, (0, _lib.E)(_templateObject4), 'removeTag'), _events),
+	    methods: {
+	        removeTag: function removeTag(index) {
+	            if (index > -1) {
+	                var canRM = !this.readOnly(this.tags[index]);
+	                canRM && this.tags.splice(index, 1);
+	            }
+	        },
+	        inputLast: function inputLast() {
+	            this.$broadcast((0, _lib.E)(_templateObject3), this.length);
+	        },
+	        dedupe: function dedupe(tag) {
+	            var _this = this;
+
+	            if (this.trackBy === '$index') return this.tags.includes(tag);else {
+	                var _ret = function () {
+	                    var field = tag[_this.trackBy];
+	                    return {
+	                        v: _this.tags.some(function (item) {
+	                            return item[_this.trackBy] === field;
+	                        })
+	                    };
+	                }();
+
+	                if ((typeof _ret === 'undefined' ? 'undefined' : _typeof(_ret)) === "object") return _ret.v;
 	            }
 	        }
 	    },
-	    data: function data() {
-	        return {
-	            lastInput: false
-	        };
-	    },
-
-	    events: {
-	        typingFinish: function typingFinish(text, index) {
-	            this.tags.splice(index, 0, { text: text });
-	        }
-	    },
-	    methods: {
-	        removeTag: function removeTag(item) {
-	            var index = this.tags.indexOf(item);
-	            index > -1 && this.tags.splice(index, 1);
+	    filters: {
+	        getText: function getText(item) {
+	            return this.render(item);
 	        },
-	        inputNew: function inputNew() {
-	            this.lastInput = true;
+	        getRemoveHandle: function getRemoveHandle(item, index) {
+	            return this.readOnly(item) ? null : this.removeTag.bind(this, index);
 	        }
 	    },
 	    components: {
-	        tag: __webpack_require__(7),
-	        typing: __webpack_require__(12)
+	        tag: __webpack_require__(8),
+	        typing: __webpack_require__(13)
 	    }
 	};
 	// </script>
 
 /***/ },
 /* 7 */
+/***/ function(module, exports) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	exports.E = E;
+	var KEY_CODE = exports.KEY_CODE = {
+	    LEFT: 37,
+	    RIGHT: 39,
+	    TAB: 9,
+	    BACKSPACE: 8
+	};
+
+	//inner event name parser
+	function E(str) {
+	    return '_vti_' + str[0];
+	}
+
+	var klass = exports.klass = {
+	    container: 'tags-input',
+	    input: 'input',
+	    gap: 'gap',
+	    tag: 'tag'
+	};
+
+/***/ },
+/* 8 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __vue_script__, __vue_template__
-	__webpack_require__(8)
-	__vue_script__ = __webpack_require__(10)
-	__vue_template__ = __webpack_require__(11)
+	__webpack_require__(9)
+	__vue_script__ = __webpack_require__(11)
+	if (__vue_script__ &&
+	    __vue_script__.__esModule &&
+	    Object.keys(__vue_script__).length > 1) {
+	  console.warn("[vue-loader] src/tag.vue: named exports in *.vue files are ignored.")}
+	__vue_template__ = __webpack_require__(12)
 	module.exports = __vue_script__ || {}
 	if (module.exports.__esModule) module.exports = module.exports.default
-	if (__vue_template__) { (typeof module.exports === "function" ? module.exports.options : module.exports).template = __vue_template__ }
+	if (__vue_template__) {
+	(typeof module.exports === "function" ? (module.exports.options || (module.exports.options = {})) : module.exports).template = __vue_template__
+	}
 	if (false) {(function () {  module.hot.accept()
 	  var hotAPI = require("vue-hot-reload-api")
 	  hotAPI.install(require("vue"), true)
@@ -506,13 +591,13 @@
 	})()}
 
 /***/ },
-/* 8 */
+/* 9 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 
 	// load the styles
-	var content = __webpack_require__(9);
+	var content = __webpack_require__(10);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
 	var update = __webpack_require__(5)(content, {});
@@ -521,8 +606,8 @@
 	if(false) {
 		// When the styles change, update the <style> tags
 		if(!content.locals) {
-			module.hot.accept("!!./../node_modules/css-loader/index.js!./../node_modules/vue-loader/lib/style-rewriter.js?id=_v-066e46e3&file=tag.vue&scoped=true!./../node_modules/vue-loader/lib/selector.js?type=style&index=0!./tag.vue", function() {
-				var newContent = require("!!./../node_modules/css-loader/index.js!./../node_modules/vue-loader/lib/style-rewriter.js?id=_v-066e46e3&file=tag.vue&scoped=true!./../node_modules/vue-loader/lib/selector.js?type=style&index=0!./tag.vue");
+			module.hot.accept("!!./../node_modules/css-loader/index.js!./../node_modules/vue-loader/lib/style-rewriter.js?id=_v-066e46e3&scoped=true!./../node_modules/vue-loader/lib/selector.js?type=style&index=0!./tag.vue", function() {
+				var newContent = require("!!./../node_modules/css-loader/index.js!./../node_modules/vue-loader/lib/style-rewriter.js?id=_v-066e46e3&scoped=true!./../node_modules/vue-loader/lib/selector.js?type=style&index=0!./tag.vue");
 				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
 				update(newContent);
 			});
@@ -532,7 +617,7 @@
 	}
 
 /***/ },
-/* 9 */
+/* 10 */
 /***/ function(module, exports, __webpack_require__) {
 
 	exports = module.exports = __webpack_require__(4)();
@@ -540,32 +625,36 @@
 
 
 	// module
-	exports.push([module.id, "\n.tag[_v-066e46e3] {\n    border-radius: 5px;\n    border: 1px solid red;\n    background-color: rgb(250, 227, 92);\n    font-size: 14px;\n}\n.remove[_v-066e46e3]::after{\n    color: rgba(0, 0, 0, 0.6);\n    content: \"\\2A2F\";\n    padding-left: 1px;\n}\n.hl-click[_v-066e46e3]:hover:active {\n    box-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);\n}\n", ""]);
+	exports.push([module.id, "\n.tag[_v-066e46e3] {\n    border: 1px solid #e0e0e0;\n    border-radius: 3px;\n    color: #858585;\n    font-weight: normal;\n    font-size: 12px;\n}\n.remove[_v-066e46e3]::after{\n    color: rgba(0, 0, 0, 0.6);\n    content: \"\\2A2F\";\n    padding-left: 1px;\n}\n.hl-click[_v-066e46e3]:hover:active {\n    box-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);\n}\n", ""]);
 
 	// exports
 
 
 /***/ },
-/* 10 */
+/* 11 */
 /***/ function(module, exports) {
 
-	'use strict';
+	"use strict";
 
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
 	});
 	// <template>
-	//     <span class="tag">
-	//         {{item.text}}
-	//         <span class="remove hl-click" @click="remove(item)"></span>
+	//     <span :class="klass.tag">
+	//         {{text}}
+	//         <span v-if="remove"
+	//             class="remove hl-click"
+	//             @click="remove">
+	//         </span>
 	//     </span>
 	// </template>
 	// <style scoped>
 	// .tag {
-	//     border-radius: 5px;
-	//     border: 1px solid red;
-	//     background-color: rgb(250, 227, 92);
-	//     font-size: 14px;
+	//     border: 1px solid #e0e0e0;
+	//     border-radius: 3px;
+	//     color: #858585;
+	//     font-weight: normal;
+	//     font-size: 12px;
 	// }
 	// .remove::after{
 	//     color: rgba(0, 0, 0, 0.6);
@@ -578,27 +667,46 @@
 	// </style>
 	// <script>
 	exports.default = {
-	    props: ['item', 'remove']
+	    props: {
+	        text: {
+	            type: String,
+	            required: true
+	        },
+	        remove: {
+	            type: Function
+	        }
+	    },
+	    computed: {
+	        klass: function klass() {
+	            return this.$parent.klass;
+	        }
+	    }
 	};
 	// </script>
 
 /***/ },
-/* 11 */
+/* 12 */
 /***/ function(module, exports) {
 
-	module.exports = "\n    <span class=\"tag\" _v-066e46e3=\"\">\n        {{item.text}}\n        <span class=\"remove hl-click\" @click=\"remove(item)\" _v-066e46e3=\"\"></span>\n    </span>\n";
+	module.exports = "\n<span :class=\"klass.tag\" _v-066e46e3=\"\">\n    {{text}}\n    <span v-if=\"remove\" class=\"remove hl-click\" @click=\"remove\" _v-066e46e3=\"\">\n    </span>\n</span>\n";
 
 /***/ },
-/* 12 */
+/* 13 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __vue_script__, __vue_template__
-	__webpack_require__(13)
-	__vue_script__ = __webpack_require__(15)
-	__vue_template__ = __webpack_require__(17)
+	__webpack_require__(14)
+	__vue_script__ = __webpack_require__(16)
+	if (__vue_script__ &&
+	    __vue_script__.__esModule &&
+	    Object.keys(__vue_script__).length > 1) {
+	  console.warn("[vue-loader] src/typing.vue: named exports in *.vue files are ignored.")}
+	__vue_template__ = __webpack_require__(18)
 	module.exports = __vue_script__ || {}
 	if (module.exports.__esModule) module.exports = module.exports.default
-	if (__vue_template__) { (typeof module.exports === "function" ? module.exports.options : module.exports).template = __vue_template__ }
+	if (__vue_template__) {
+	(typeof module.exports === "function" ? (module.exports.options || (module.exports.options = {})) : module.exports).template = __vue_template__
+	}
 	if (false) {(function () {  module.hot.accept()
 	  var hotAPI = require("vue-hot-reload-api")
 	  hotAPI.install(require("vue"), true)
@@ -612,13 +720,13 @@
 	})()}
 
 /***/ },
-/* 13 */
+/* 14 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 
 	// load the styles
-	var content = __webpack_require__(14);
+	var content = __webpack_require__(15);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
 	var update = __webpack_require__(5)(content, {});
@@ -627,8 +735,8 @@
 	if(false) {
 		// When the styles change, update the <style> tags
 		if(!content.locals) {
-			module.hot.accept("!!./../node_modules/css-loader/index.js!./../node_modules/vue-loader/lib/style-rewriter.js?id=_v-0aec893e&file=typing.vue&scoped=true!./../node_modules/vue-loader/lib/selector.js?type=style&index=0!./typing.vue", function() {
-				var newContent = require("!!./../node_modules/css-loader/index.js!./../node_modules/vue-loader/lib/style-rewriter.js?id=_v-0aec893e&file=typing.vue&scoped=true!./../node_modules/vue-loader/lib/selector.js?type=style&index=0!./typing.vue");
+			module.hot.accept("!!./../node_modules/css-loader/index.js!./../node_modules/vue-loader/lib/style-rewriter.js?id=_v-0aec893e&scoped=true!./../node_modules/vue-loader/lib/selector.js?type=style&index=0!./typing.vue", function() {
+				var newContent = require("!!./../node_modules/css-loader/index.js!./../node_modules/vue-loader/lib/style-rewriter.js?id=_v-0aec893e&scoped=true!./../node_modules/vue-loader/lib/selector.js?type=style&index=0!./typing.vue");
 				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
 				update(newContent);
 			});
@@ -638,7 +746,7 @@
 	}
 
 /***/ },
-/* 14 */
+/* 15 */
 /***/ function(module, exports, __webpack_require__) {
 
 	exports = module.exports = __webpack_require__(4)();
@@ -646,13 +754,13 @@
 
 
 	// module
-	exports.push([module.id, "\ninput[_v-0aec893e] {\n    outline: none;\n    box-shadow: none;\n    border: none;\n    background-color: transparent;\n    font-family: monospace;\n    padding: 0.5ch;\n}\n.gap[_v-0aec893e] {\n    -webkit-flex-basis: 7px;\n        -ms-flex-preferred-size: 7px;\n            flex-basis: 7px;\n}\n", ""]);
+	exports.push([module.id, "\ninput.input[_v-0aec893e] {\n    outline: none;\n    box-shadow: none;\n    border: none;\n    background-color: transparent;\n    font-family: monospace;\n    padding: 0.5ch;\n}\n.gap[_v-0aec893e] {\n    -webkit-flex-basis: 7px;\n        -ms-flex-preferred-size: 7px;\n            flex-basis: 7px;\n}\n", ""]);
 
 	// exports
 
 
 /***/ },
-/* 15 */
+/* 16 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -661,69 +769,35 @@
 	    value: true
 	});
 
-	var _vue = __webpack_require__(16);
+	var _templateObject = _taggedTemplateLiteral(['active'], ['active']),
+	    _templateObject2 = _taggedTemplateLiteral(['insert'], ['insert']),
+	    _templateObject3 = _taggedTemplateLiteral(['activeOther'], ['activeOther']),
+	    _templateObject4 = _taggedTemplateLiteral(['remove'], ['remove']);
+
+	var _vue = __webpack_require__(17);
 
 	var _vue2 = _interopRequireDefault(_vue);
 
+	var _lib = __webpack_require__(7);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	exports.default = {
-	    props: {
-	        index: {
-	            type: Number,
-	            required: true
-	        },
-	        typing: {
-	            type: Boolean,
-	            default: false
-	        }
-	    },
-	    data: function data() {
-	        return {
-	            text: ''
-	        };
-	    },
+	function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
-	    watch: {
-	        typing: function typing(val) {
-	            var _this = this;
-
-	            val && _vue2.default.nextTick(function (_) {
-	                return _this.$els.input.focus();
-	            });
-	        }
-	    },
-	    methods: {
-	        begin: function begin() {
-	            this.typing = true;
-	        },
-	        finish: function finish() {
-	            this.text && this.$dispatch('typingFinish', this.text, this.index);
-	            this.typing = false;
-	            this.text = '';
-	        },
-	        charLen: function charLen(str) {
-	            var charNum = 0;
-	            for (var i = 0; i < str.length; ++i) {
-	                charNum += str.charCodeAt(i) > 127 ? 2 : 1;
-	            }
-	            return charNum;
-	        }
-	    }
-	};
-	// </script>
-	// <template>
+	function _taggedTemplateLiteral(strings, raw) { return Object.freeze(Object.defineProperties(strings, { raw: { value: Object.freeze(raw) } })); } // <template>
 	//     <input v-if="typing"
+	//         :class="klass.input"
 	//         v-el:input
 	//         type="text"
 	//         v-model="text"
 	//         @blur="finish"
-	//         :style="{width: 1 + charLen(text) + 'ch'}" />
+	//         @keydown="keyPress"
+	//         :style="{width: 2 + charLen(text) + 'ch'}" />
 	//     <span v-else
-	//         class="gap" @click="begin">&nbsp;</span>
+	//         :class="klass.gap" @click="begin">&nbsp;</span>
 	// </template>
 	// <style scoped>
-	// input {
+	// input.input {
 	//     outline: none;
 	//     box-shadow: none;
 	//     border: none;
@@ -737,23 +811,96 @@
 	// </style>
 	// <script>
 
-/***/ },
-/* 16 */
-/***/ function(module, exports) {
 
-	module.exports = require("vue");
+	exports.default = {
+	    props: {
+	        index: {
+	            type: Number,
+	            required: true
+	        }
+	    },
+	    data: function data() {
+	        return {
+	            typing: false,
+	            text: ''
+	        };
+	    },
+
+	    computed: {
+	        klass: function klass() {
+	            return this.$parent.klass;
+	        }
+	    },
+	    watch: {
+	        typing: function typing(val) {
+	            var _this = this;
+
+	            val && _vue2.default.nextTick(function (_) {
+	                return _this.$els.input.focus();
+	            });
+	        }
+	    },
+	    events: _defineProperty({}, (0, _lib.E)(_templateObject), function (index) {
+	        this.typing = index === this.index;
+	    }),
+	    methods: {
+	        begin: function begin() {
+	            this.typing = true;
+	        },
+	        finish: function finish() {
+	            var result = this.text.trim();
+	            result && this.$dispatch((0, _lib.E)(_templateObject2), this.index, result);
+	            this.typing = false;
+	            this.text = '';
+	        },
+	        charLen: function charLen(str) {
+	            var charNum = 0;
+	            for (var i = 0; i < str.length; ++i) {
+	                charNum += str.charCodeAt(i) > 127 ? 2 : 1;
+	            }
+	            return charNum;
+	        },
+	        keyPress: function keyPress(e) {
+	            var $input = this.$els.input;
+	            var cursor = $input.selectionStart;
+	            var valLen = $input.value.length;
+	            var key = e.keyCode;
+	            var native = false;
+
+	            if (key === _lib.KEY_CODE.RIGHT && cursor === valLen) {
+	                valLen === 0 && this.$dispatch((0, _lib.E)(_templateObject3), this.index + 1);
+	            } else if (key === _lib.KEY_CODE.LEFT && cursor === 0) {
+	                valLen === 0 && this.$dispatch((0, _lib.E)(_templateObject3), this.index - 1);
+	            } else if (key === _lib.KEY_CODE.BACKSPACE && cursor === 0) {
+	                this.$dispatch((0, _lib.E)(_templateObject4), this.index - 1);
+	            } else if (key === _lib.KEY_CODE.TAB) {
+	                this.finish();
+	                this.$dispatch((0, _lib.E)(_templateObject3), this.index);
+	            } else native = true;
+
+	            !native && e.preventDefault();
+	        }
+	    }
+	};
+	// </script>
 
 /***/ },
 /* 17 */
 /***/ function(module, exports) {
 
-	module.exports = "\n    <input v-if=\"typing\" v-el:input=\"\" type=\"text\" v-model=\"text\" @blur=\"finish\" :style=\"{width: 1 + charLen(text) + 'ch'}\" _v-0aec893e=\"\">\n    <span v-else=\"\" class=\"gap\" @click=\"begin\" _v-0aec893e=\"\">&nbsp;</span>\n";
+	module.exports = require("vue");
 
 /***/ },
 /* 18 */
 /***/ function(module, exports) {
 
-	module.exports = "\n    <div class=\"tags-input\" @click.self=\"inputNew\" _v-607a9ed3=\"\">\n        <template v-for=\"(index, item) in tags\" _v-607a9ed3=\"\">\n            <typing :index=\"index\" _v-607a9ed3=\"\"></typing>\n            <tag :item=\"item\" :remove=\"removeTag\" _v-607a9ed3=\"\"></tag>\n        </template>\n        <typing :index=\"tags.length\" :typing.sync=\"lastInput\" _v-607a9ed3=\"\"></typing>\n    </div>\n";
+	module.exports = "\n<input v-if=\"typing\" :class=\"klass.input\" v-el:input=\"\" type=\"text\" v-model=\"text\" @blur=\"finish\" @keydown=\"keyPress\" :style=\"{width: 2 + charLen(text) + 'ch'}\" _v-0aec893e=\"\">\n<span v-else=\"\" :class=\"klass.gap\" @click=\"begin\" _v-0aec893e=\"\">&nbsp;</span>\n";
+
+/***/ },
+/* 19 */
+/***/ function(module, exports) {
+
+	module.exports = "\n<div :class=\"klass.container\" @click.self=\"inputLast\" _v-607a9ed3=\"\">\n    <template v-for=\"(index, item) in tags\" :track-by=\"trackBy\">\n        <typing :index=\"index\" _v-607a9ed3=\"\"></typing>\n        <tag :text=\"item | getText\" :remove=\"item | getRemoveHandle index\" _v-607a9ed3=\"\">\n        </tag>\n    </template>\n    <typing :index=\"length\" _v-607a9ed3=\"\"></typing>\n</div>\n";
 
 /***/ }
 /******/ ])));
