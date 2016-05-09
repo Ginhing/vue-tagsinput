@@ -486,7 +486,7 @@
 	    },
 	    events: (_events = {}, _defineProperty(_events, (0, _lib.E)(_templateObject), function (index, text) {
 	        var tag = this.insert(text);
-	        !this.dedupe(tag) && this.tags.splice(index, 0, tag);
+	        tag && !this.dedupe(tag) && this.tags.splice(index, 0, tag);
 	    }), _defineProperty(_events, (0, _lib.E)(_templateObject2), function (index) {
 	        index >= 0 && index <= this.length && this.$broadcast((0, _lib.E)(_templateObject3), index);
 	    }), _defineProperty(_events, (0, _lib.E)(_templateObject4), 'removeTag'), _events),
@@ -551,7 +551,7 @@
 
 	//inner event name parser
 	function E(str) {
-	    return '_vti_' + str[0];
+	    return str[0] + '.vue-tagsinput';
 	}
 
 	var klass = exports.klass = {
@@ -625,7 +625,7 @@
 
 
 	// module
-	exports.push([module.id, "\n.tag[_v-066e46e3] {\n    border: 1px solid #e0e0e0;\n    border-radius: 3px;\n    color: #858585;\n    font-weight: normal;\n    font-size: 12px;\n}\n.remove[_v-066e46e3]::after{\n    color: rgba(0, 0, 0, 0.6);\n    content: \"\\2A2F\";\n    padding-left: 1px;\n}\n.hl-click[_v-066e46e3]:hover:active {\n    box-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);\n}\n", ""]);
+	exports.push([module.id, "\n.tag[_v-066e46e3] {\n    border: 1px solid #e0e0e0;\n    border-radius: 3px;\n    color: #858585;\n    font-weight: normal;\n    font-size: 12px;\n    padding: 0 0.5ch;\n}\n.remove[_v-066e46e3] {\n    cursor: pointer;\n}\n.remove[_v-066e46e3]::after{\n    color: rgba(0, 0, 0, 0.6);\n    content: \"\\2A2F\";\n    padding-left: 1px;\n}\n.hl-click[_v-066e46e3]:hover:active {\n    box-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);\n}\n", ""]);
 
 	// exports
 
@@ -655,6 +655,10 @@
 	//     color: #858585;
 	//     font-weight: normal;
 	//     font-size: 12px;
+	//     padding: 0 0.5ch;
+	// }
+	// .remove {
+	//     cursor: pointer;
 	// }
 	// .remove::after{
 	//     color: rgba(0, 0, 0, 0.6);
@@ -769,10 +773,12 @@
 	    value: true
 	});
 
-	var _templateObject = _taggedTemplateLiteral(['active'], ['active']),
-	    _templateObject2 = _taggedTemplateLiteral(['insert'], ['insert']),
-	    _templateObject3 = _taggedTemplateLiteral(['activeOther'], ['activeOther']),
-	    _templateObject4 = _taggedTemplateLiteral(['remove'], ['remove']);
+	var _templateObject = _taggedTemplateLiteral(['focus'], ['focus']),
+	    _templateObject2 = _taggedTemplateLiteral(['active'], ['active']),
+	    _templateObject3 = _taggedTemplateLiteral(['insert'], ['insert']),
+	    _templateObject4 = _taggedTemplateLiteral(['blur'], ['blur']),
+	    _templateObject5 = _taggedTemplateLiteral(['activeOther'], ['activeOther']),
+	    _templateObject6 = _taggedTemplateLiteral(['remove'], ['remove']);
 
 	var _vue = __webpack_require__(17);
 
@@ -836,11 +842,13 @@
 	            var _this = this;
 
 	            val && _vue2.default.nextTick(function (_) {
-	                return _this.$els.input.focus();
+	                var $el = _this.$els.input;
+	                _this.$dispatch((0, _lib.E)(_templateObject), $el);
+	                $el.focus();
 	            });
 	        }
 	    },
-	    events: _defineProperty({}, (0, _lib.E)(_templateObject), function (index) {
+	    events: _defineProperty({}, (0, _lib.E)(_templateObject2), function (index) {
 	        this.typing = index === this.index;
 	    }),
 	    methods: {
@@ -848,10 +856,13 @@
 	            this.typing = true;
 	        },
 	        finish: function finish() {
+	            var inactive = arguments.length <= 0 || arguments[0] === undefined ? true : arguments[0];
+
 	            var result = this.text.trim();
-	            result && this.$dispatch((0, _lib.E)(_templateObject2), this.index, result);
-	            this.typing = false;
+	            result && this.$dispatch((0, _lib.E)(_templateObject3), this.index, result);
 	            this.text = '';
+	            this.typing = !inactive;
+	            inactive && this.$dispatch((0, _lib.E)(_templateObject4), this.$els.input);
 	        },
 	        charLen: function charLen(str) {
 	            var charNum = 0;
@@ -868,14 +879,13 @@
 	            var native = false;
 
 	            if (key === _lib.KEY_CODE.RIGHT && cursor === valLen) {
-	                valLen === 0 && this.$dispatch((0, _lib.E)(_templateObject3), this.index + 1);
+	                valLen === 0 && this.$dispatch((0, _lib.E)(_templateObject5), this.index + 1);
 	            } else if (key === _lib.KEY_CODE.LEFT && cursor === 0) {
-	                valLen === 0 && this.$dispatch((0, _lib.E)(_templateObject3), this.index - 1);
+	                valLen === 0 && this.$dispatch((0, _lib.E)(_templateObject5), this.index - 1);
 	            } else if (key === _lib.KEY_CODE.BACKSPACE && cursor === 0) {
-	                this.$dispatch((0, _lib.E)(_templateObject4), this.index - 1);
+	                this.$dispatch((0, _lib.E)(_templateObject6), this.index - 1);
 	            } else if (key === _lib.KEY_CODE.TAB) {
-	                this.finish();
-	                this.$dispatch((0, _lib.E)(_templateObject3), this.index);
+	                this.finish(false);
 	            } else native = true;
 
 	            !native && e.preventDefault();
