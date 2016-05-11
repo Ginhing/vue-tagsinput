@@ -112,7 +112,7 @@
 
 
 	// module
-	exports.push([module.id, "\n.tags-input[_v-607a9ed3] {\n    display: -webkit-box;\n    display: -webkit-flex;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-orient: horizontal;\n    -webkit-box-direction: normal;\n    -webkit-flex-direction: row;\n        -ms-flex-direction: row;\n            flex-direction: row;\n    -webkit-box-align: center;\n    -webkit-align-items: center;\n        -ms-flex-align: center;\n            align-items: center;\n    -webkit-flex-wrap: wrap;\n        -ms-flex-wrap: wrap;\n            flex-wrap: wrap;\n    box-shadow: 0 0 2px rgba(0, 0, 0, 0.3);\n    min-height: 28px;\n}\n", ""]);
+	exports.push([module.id, "\n.tags-input[_v-607a9ed3] {\n    display: -webkit-box;\n    display: -webkit-flex;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-orient: horizontal;\n    -webkit-box-direction: normal;\n    -webkit-flex-direction: row;\n        -ms-flex-direction: row;\n            flex-direction: row;\n    -webkit-box-align: center;\n    -webkit-align-items: center;\n        -ms-flex-align: center;\n            align-items: center;\n    -webkit-flex-wrap: wrap;\n        -ms-flex-wrap: wrap;\n            flex-wrap: wrap;\n    box-shadow: 0 0 0.15rem rgba(0, 0, 0, 0.3);\n    font-size: 0.75rem;\n    padding: 0.1rem 0\n}\n.placeholder[_v-607a9ed3] {\n    display: inline-block;\n    color: #A9A9A9;\n    line-height: 2em;\n    white-space: nowrap;\n}\n", ""]);
 
 	// exports
 
@@ -427,7 +427,9 @@
 	//                 :remove="item | getRemoveHandle index">
 	//             </tag>
 	//         </template>
-	//         <typing :index="length"></typing>
+	//         <typing :index="length">
+	//             <span v-if="placeholder" :class="klass.placeholder">{{placeholder}}</span>
+	//         </typing>
 	//     </div>
 	// </template>
 	// <style scoped>
@@ -436,8 +438,15 @@
 	//     flex-direction: row;
 	//     align-items: center;
 	//     flex-wrap: wrap;
-	//     box-shadow: 0 0 2px rgba(0, 0, 0, 0.3);
-	//     min-height: 28px;
+	//     box-shadow: 0 0 0.15rem rgba(0, 0, 0, 0.3);
+	//     font-size: 0.75rem;
+	//     padding: 0.1rem 0
+	// }
+	// .placeholder {
+	//     display: inline-block;
+	//     color: #A9A9A9;
+	//     line-height: 2em;
+	//     white-space: nowrap;
 	// }
 	// </style>
 	// <script>
@@ -450,34 +459,20 @@
 	            type: Array,
 	            required: true
 	        },
-	        klass: {
-	            type: Object,
-	            default: function _default() {
+	        placeholder: { type: String },
+	        klass: { type: Object, default: function _default() {
 	                return _lib.klass;
-	            }
-	        },
-	        insert: {
-	            type: Function,
-	            default: function _default(text) {
+	            } },
+	        insert: { type: Function, default: function _default(text) {
 	                return text;
-	            }
-	        },
-	        render: {
-	            type: Function,
-	            default: function _default(item) {
+	            } },
+	        render: { type: Function, default: function _default(item) {
 	                return item;
-	            }
-	        },
-	        readOnly: {
-	            type: Function,
-	            default: function _default(item) {
+	            } },
+	        readOnly: { type: Function, default: function _default(item) {
 	                return false;
-	            }
-	        },
-	        trackBy: {
-	            type: String,
-	            default: '$index'
-	        }
+	            } },
+	        trackBy: { type: String, default: '$index' }
 	    },
 	    computed: {
 	        length: function length() {
@@ -558,7 +553,8 @@
 	    container: 'tags-input',
 	    input: 'input',
 	    gap: 'gap',
-	    tag: 'tag'
+	    tag: 'tag',
+	    placeholder: 'placeholder'
 	};
 
 /***/ },
@@ -625,7 +621,7 @@
 
 
 	// module
-	exports.push([module.id, "\n.tag[_v-066e46e3] {\n    border: 1px solid #e0e0e0;\n    border-radius: 3px;\n    color: #858585;\n    font-weight: normal;\n    font-size: 12px;\n    padding: 0 0.5ch;\n}\n.remove[_v-066e46e3] {\n    cursor: pointer;\n}\n.remove[_v-066e46e3]::after{\n    color: rgba(0, 0, 0, 0.6);\n    content: \"\\2A2F\";\n    padding-left: 1px;\n}\n.hl-click[_v-066e46e3]:hover:active {\n    box-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);\n}\n", ""]);
+	exports.push([module.id, "\n.tag[_v-066e46e3] {\n    border: 1px solid #e0e0e0;\n    border-radius: 3px;\n    color: #858585;\n    font-weight: normal;\n    font-size: 1.1em;\n    padding: 0 0.5ch;\n}\n.remove[_v-066e46e3] {\n    cursor: pointer;\n}\n.remove[_v-066e46e3]::after{\n    color: rgba(0, 0, 0, 0.6);\n    content: \"\\2A2F\";\n    padding-left: 1px;\n}\n.hl-click[_v-066e46e3]:hover:active {\n    box-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);\n}\n", ""]);
 
 	// exports
 
@@ -654,7 +650,7 @@
 	//     border-radius: 3px;
 	//     color: #858585;
 	//     font-weight: normal;
-	//     font-size: 12px;
+	//     font-size: 1.1em;
 	//     padding: 0 0.5ch;
 	// }
 	// .remove {
@@ -758,7 +754,7 @@
 
 
 	// module
-	exports.push([module.id, "\ninput.input[_v-0aec893e] {\n    outline: none;\n    box-shadow: none;\n    border: none;\n    background-color: transparent;\n    font-family: monospace;\n    padding: 0.5ch;\n}\n.gap[_v-0aec893e] {\n    -webkit-flex-basis: 7px;\n        -ms-flex-preferred-size: 7px;\n            flex-basis: 7px;\n}\n", ""]);
+	exports.push([module.id, "\ninput.input[_v-0aec893e] {\n    outline: none;\n    box-shadow: none;\n    border: none;\n    background-color: transparent;\n    font-family: monospace;\n    padding: 0 0.5ch;\n    line-height: 2em;\n}\n.gap[_v-0aec893e] {\n\n}\n", ""]);
 
 	// exports
 
@@ -791,16 +787,16 @@
 	function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
 	function _taggedTemplateLiteral(strings, raw) { return Object.freeze(Object.defineProperties(strings, { raw: { value: Object.freeze(raw) } })); } // <template>
-	//     <input v-if="typing"
-	//         :class="klass.input"
-	//         v-el:input
-	//         type="text"
-	//         v-model="text"
-	//         @blur="finish"
-	//         @keydown="keyPress"
-	//         :style="{width: 2 + charLen(text) + 'ch'}" />
-	//     <span v-else
-	//         :class="klass.gap" @click="begin">&nbsp;</span>
+	//     <span :class="klass.gap" @click="begin">
+	//         <input type="text"
+	//             :class="klass.input"
+	//             :style="{width: base + charLen(text) + 'ch'}"
+	//             v-el:input
+	//             v-model="text"
+	//             @blur="finish"
+	//             @keydown="keyPress" />
+	//             <slot v-if="!typing"></slot>
+	//     </span>
 	// </template>
 	// <style scoped>
 	// input.input {
@@ -809,10 +805,11 @@
 	//     border: none;
 	//     background-color: transparent;
 	//     font-family: monospace;
-	//     padding: 0.5ch;
+	//     padding: 0 0.5ch;
+	//     line-height: 2em;
 	// }
 	// .gap {
-	//     flex-basis: 7px;
+	//
 	// }
 	// </style>
 	// <script>
@@ -833,6 +830,9 @@
 	    },
 
 	    computed: {
+	        base: function base() {
+	            return this.typing ? 2 : 0;
+	        },
 	        klass: function klass() {
 	            return this.$parent.klass;
 	        }
@@ -843,8 +843,8 @@
 
 	            val && _vue2.default.nextTick(function (_) {
 	                var $el = _this.$els.input;
-	                _this.$dispatch((0, _lib.E)(_templateObject), $el);
 	                $el.focus();
+	                _this.$dispatch((0, _lib.E)(_templateObject), $el);
 	            });
 	        }
 	    },
@@ -878,10 +878,10 @@
 	            var key = e.keyCode;
 	            var native = false;
 
-	            if (key === _lib.KEY_CODE.RIGHT && cursor === valLen) {
-	                valLen === 0 && this.$dispatch((0, _lib.E)(_templateObject5), this.index + 1);
-	            } else if (key === _lib.KEY_CODE.LEFT && cursor === 0) {
-	                valLen === 0 && this.$dispatch((0, _lib.E)(_templateObject5), this.index - 1);
+	            if (key === _lib.KEY_CODE.RIGHT && valLen === 0) {
+	                this.$dispatch((0, _lib.E)(_templateObject5), this.index + 1);
+	            } else if (key === _lib.KEY_CODE.LEFT && valLen === 0) {
+	                this.$dispatch((0, _lib.E)(_templateObject5), this.index - 1);
 	            } else if (key === _lib.KEY_CODE.BACKSPACE && cursor === 0) {
 	                this.$dispatch((0, _lib.E)(_templateObject6), this.index - 1);
 	            } else if (key === _lib.KEY_CODE.TAB) {
@@ -904,13 +904,13 @@
 /* 18 */
 /***/ function(module, exports) {
 
-	module.exports = "\n<input v-if=\"typing\" :class=\"klass.input\" v-el:input=\"\" type=\"text\" v-model=\"text\" @blur=\"finish\" @keydown=\"keyPress\" :style=\"{width: 2 + charLen(text) + 'ch'}\" _v-0aec893e=\"\">\n<span v-else=\"\" :class=\"klass.gap\" @click=\"begin\" _v-0aec893e=\"\">&nbsp;</span>\n";
+	module.exports = "\n<span :class=\"klass.gap\" @click=\"begin\" _v-0aec893e=\"\">\n    <input type=\"text\" :class=\"klass.input\" :style=\"{width: base + charLen(text) + 'ch'}\" v-el:input=\"\" v-model=\"text\" @blur=\"finish\" @keydown=\"keyPress\" _v-0aec893e=\"\">\n        <slot v-if=\"!typing\" _v-0aec893e=\"\"></slot>\n</span>\n";
 
 /***/ },
 /* 19 */
 /***/ function(module, exports) {
 
-	module.exports = "\n<div :class=\"klass.container\" @click.self=\"inputLast\" _v-607a9ed3=\"\">\n    <template v-for=\"(index, item) in tags\" :track-by=\"trackBy\">\n        <typing :index=\"index\" _v-607a9ed3=\"\"></typing>\n        <tag :text=\"item | getText\" :remove=\"item | getRemoveHandle index\" _v-607a9ed3=\"\">\n        </tag>\n    </template>\n    <typing :index=\"length\" _v-607a9ed3=\"\"></typing>\n</div>\n";
+	module.exports = "\n<div :class=\"klass.container\" @click.self=\"inputLast\" _v-607a9ed3=\"\">\n    <template v-for=\"(index, item) in tags\" :track-by=\"trackBy\">\n        <typing :index=\"index\" _v-607a9ed3=\"\"></typing>\n        <tag :text=\"item | getText\" :remove=\"item | getRemoveHandle index\" _v-607a9ed3=\"\">\n        </tag>\n    </template>\n    <typing :index=\"length\" _v-607a9ed3=\"\">\n        <span v-if=\"placeholder\" :class=\"klass.placeholder\" _v-607a9ed3=\"\">{{placeholder}}</span>\n    </typing>\n</div>\n";
 
 /***/ }
 /******/ ])));
