@@ -52,8 +52,8 @@ export default {
         typing(val) {
             val && Vue.nextTick(_ => {
                 let $el = this.$els.input
-                this.$dispatch(E`focus`, $el)
                 $el.focus()
+                this.$dispatch(E`focus`, $el)
             })
         }
     },
@@ -87,10 +87,10 @@ export default {
             let key = e.keyCode
             let native = false
 
-            if (key === KEY_CODE.RIGHT && cursor === valLen) {
-                valLen === 0 && this.$dispatch(E`activeOther`, this.index + 1)
-            } else if (key === KEY_CODE.LEFT && cursor === 0) {
-                valLen === 0 && this.$dispatch(E`activeOther`, this.index - 1)
+            if (key === KEY_CODE.RIGHT && valLen === 0) {
+                this.$dispatch(E`activeOther`, this.index + 1)
+            } else if (key === KEY_CODE.LEFT && valLen === 0) {
+                this.$dispatch(E`activeOther`, this.index - 1)
             } else if (key === KEY_CODE.BACKSPACE && cursor === 0) {
                 this.$dispatch(E`remove`, this.index - 1)
             } else if (key === KEY_CODE.TAB) {
