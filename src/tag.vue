@@ -13,7 +13,7 @@
     border-radius: 3px;
     color: #858585;
     font-weight: normal;
-    font-size: 12px;
+    font-size: 1.1em;
     padding: 0 0.5ch;
 }
 .remove {

@@ -1,15 +1,13 @@
 <template>
-    <input v-if="typing"
-        :class="klass.input"
-        v-el:input
-        type="text"
-        v-model="text"
-        @blur="finish"
-        @keydown="keyPress"
-        :style="{width: 2 + charLen(text) + 'ch'}" />
-    <span v-else
-        :class="klass.gap" @click="begin">
-        <slot></slot>
+    <span :class="klass.gap" @click="begin">
+        <input type="text"
+            :class="klass.input"
+            :style="{width: base + charLen(text) + 'ch'}"
+            v-el:input
+            v-model="text"
+            @blur="finish"
+            @keydown="keyPress" />
+            <slot v-if="!typing"></slot>
     </span>
 </template>
 <style scoped>
@@ -19,11 +17,11 @@ input.input {
     border: none;
     background-color: transparent;
     font-family: monospace;
-    padding: 0.5ch;
+    padding: 0 0.5ch;
+    line-height: 2em;
 }
 .gap {
-    flex-basis: 7px;
-    min-height: 1em;
+
 }
 </style>
 <script>
@@ -43,6 +41,9 @@ export default {
         }
     },
     computed: {
+        base() {
+            return this.typing ? 2 : 0
+        },
         klass() {
             return this.$parent.klass
         }

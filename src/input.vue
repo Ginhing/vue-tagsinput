@@ -18,15 +18,15 @@
     flex-direction: row;
     align-items: center;
     flex-wrap: wrap;
-    box-shadow: 0 0 2px rgba(0, 0, 0, 0.3);
-    min-height: 28px;
+    box-shadow: 0 0 0.15rem rgba(0, 0, 0, 0.3);
+    font-size: 0.75rem;
+    padding: 0.1rem 0
 }
 .placeholder {
+    display: inline-block;
     color: #A9A9A9;
-    font-size: 0.8em;
     line-height: 2em;
     white-space: nowrap;
-    padding-left: 0.5em;
 }
 </style>
 <script>
