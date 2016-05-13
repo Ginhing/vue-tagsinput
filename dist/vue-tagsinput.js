@@ -884,4 +884,3 @@
 
 /***/ }
 /******/ ])));
-//# sourceMappingURL=vue-tagsinput.js.map

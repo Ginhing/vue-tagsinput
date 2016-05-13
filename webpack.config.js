@@ -26,8 +26,7 @@ var config = {
         loaders: {
             scss: 'style!css'
         }
-    },
-    devtool: '#cheap-source-map'
+    }
 }
 
 // for production build
@@ -50,7 +49,8 @@ if (TARGET === 'build') {
         output: {
             path: path.resolve(__dirname, 'example'),
             filename: 'example.js'
-        }
+        },
+        devtool: '#cheap-module-eval-source-map'
     })
 }
 
