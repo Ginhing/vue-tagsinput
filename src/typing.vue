@@ -5,6 +5,7 @@
             :style="{width: base + charLen(text) + 'ch'}"
             v-el:input
             v-model="text"
+            @mousedown.prevent
             @blur="finish"
             @keydown="keyPress" />
             <slot v-if="!typing"></slot>
