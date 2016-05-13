@@ -30,7 +30,7 @@
 }
 </style>
 <script>
-import {E, klass} from './lib'
+import {_E, klass} from './lib'
 export default {
     props: {
         tags: {
@@ -51,16 +51,16 @@ export default {
         }
     },
     events: {
-        [E`insert`](index, text) {
+        [_E`insert`](index, text) {
             let tag = this.insert(text)
             tag && !this.dedupe(tag) && this.tags.splice(index, 0, tag)
         },
-        [E`activeOther`](index) {
+        [_E`activeOther`](index) {
             index >= 0
             && index <= this.length
-            && this.$broadcast(E`active`, index)
+            && this.$broadcast(_E`active`, index)
         },
-        [E`remove`]: 'removeTag'
+        [_E`remove`]: 'removeTag'
     },
     methods: {
         removeTag(index) {
@@ -70,7 +70,7 @@ export default {
             }
         },
         inputLast() {
-            this.$broadcast(E`active`, this.length)
+            this.$broadcast(_E`active`, this.length)
         },
         dedupe(tag) {
             if (this.trackBy === '$index') return this.tags.includes(tag)

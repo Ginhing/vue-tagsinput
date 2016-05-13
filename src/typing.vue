@@ -26,7 +26,7 @@ input.input {
 </style>
 <script>
 import Vue from 'vue'
-import {KEY_CODE, E} from './lib'
+import {KEY_CODE, E, _E} from './lib'
 export default {
     props: {
         index: {
@@ -58,7 +58,7 @@ export default {
         }
     },
     events: {
-        [E`active`](index) {
+        [_E`active`](index) {
             this.typing = index === this.index
         }
     },
@@ -68,7 +68,7 @@ export default {
         },
         finish(inactive = true) {
             let result = this.text.trim()
-            result && this.$dispatch(E`insert`, this.index, result)
+            result && this.$dispatch(_E`insert`, this.index, result)
             this.text = ''
             this.typing = !inactive
             inactive && this.$dispatch(E`blur`, this.$els.input)
@@ -88,11 +88,11 @@ export default {
             let native = false
 
             if (key === KEY_CODE.RIGHT && valLen === 0) {
-                this.$dispatch(E`activeOther`, this.index + 1)
+                this.$dispatch(_E`activeOther`, this.index + 1)
             } else if (key === KEY_CODE.LEFT && valLen === 0) {
-                this.$dispatch(E`activeOther`, this.index - 1)
+                this.$dispatch(_E`activeOther`, this.index - 1)
             } else if (key === KEY_CODE.BACKSPACE && cursor === 0) {
-                this.$dispatch(E`remove`, this.index - 1)
+                this.$dispatch(_E`remove`, this.index - 1)
             } else if (key === KEY_CODE.TAB) {
                 this.finish(false)
             } else native = true
