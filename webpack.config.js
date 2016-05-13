@@ -32,6 +32,7 @@ var config = {
 
 // for production build
 if (TARGET === 'build') {
+    process.env.NODE_ENV = 'production'
     config.externals = {
         vue: 'commonjs vue'
     },
