@@ -409,7 +409,10 @@
 	function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
 	function _taggedTemplateLiteral(strings, raw) { return Object.freeze(Object.defineProperties(strings, { raw: { value: Object.freeze(raw) } })); } // <template>
-	//     <div :class="klass.container" @click.self="inputLast">
+	//     <div :class="klass.container"
+	//         @mousedown.self.prevent
+	//         @click.self="inputLast"
+	//         >
 	//         <template v-for="(index, item) in tags" :track-by="trackBy">
 	//             <typing :index="index"></typing>
 	//             <tag
@@ -469,12 +472,12 @@
 	            return this.tags.length;
 	        }
 	    },
-	    events: (_events = {}, _defineProperty(_events, (0, _lib.E)(_templateObject), function (index, text) {
+	    events: (_events = {}, _defineProperty(_events, (0, _lib._E)(_templateObject), function (index, text) {
 	        var tag = this.insert(text);
 	        tag && !this.dedupe(tag) && this.tags.splice(index, 0, tag);
-	    }), _defineProperty(_events, (0, _lib.E)(_templateObject2), function (index) {
-	        index >= 0 && index <= this.length && this.$broadcast((0, _lib.E)(_templateObject3), index);
-	    }), _defineProperty(_events, (0, _lib.E)(_templateObject4), 'removeTag'), _events),
+	    }), _defineProperty(_events, (0, _lib._E)(_templateObject2), function (index) {
+	        index >= 0 && index <= this.length && this.$broadcast((0, _lib._E)(_templateObject3), index);
+	    }), _defineProperty(_events, (0, _lib._E)(_templateObject4), 'removeTag'), _events),
 	    methods: {
 	        removeTag: function removeTag(index) {
 	            if (index > -1) {
@@ -483,7 +486,7 @@
 	            }
 	        },
 	        inputLast: function inputLast() {
-	            this.$broadcast((0, _lib.E)(_templateObject3), this.length);
+	            this.$broadcast((0, _lib._E)(_templateObject3), this.length);
 	        },
 	        dedupe: function dedupe(tag) {
 	            var _this = this;
@@ -526,6 +529,7 @@
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
 	});
+	exports._E = _E;
 	exports.E = E;
 	var KEY_CODE = exports.KEY_CODE = {
 	    LEFT: 37,
@@ -535,6 +539,15 @@
 	};
 
 	//inner event name parser
+	function _E(str) {
+	    for (var _len = arguments.length, vals = Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
+	        vals[_key - 1] = arguments[_key];
+	    }
+
+	    return '__' + E.apply(undefined, arguments) + '__';
+	}
+
+	//public event name parser
 	function E(str) {
 	    return str[0] + '.vue-tagsinput';
 	}
@@ -763,7 +776,8 @@
 	//             :style="{width: base + charLen(text) + 'ch'}"
 	//             v-el:input
 	//             v-model="text"
-	//             @blur="finish"
+	//             @mousedown="preventNativeActive"
+	//             @blur="finish(true)"
 	//             @keydown="keyPress" />
 	//             <slot v-if="!typing"></slot>
 	//     </span>
@@ -818,10 +832,13 @@
 	            });
 	        }
 	    },
-	    events: _defineProperty({}, (0, _lib.E)(_templateObject2), function (index) {
+	    events: _defineProperty({}, (0, _lib._E)(_templateObject2), function (index) {
 	        this.typing = index === this.index;
 	    }),
 	    methods: {
+	        preventNativeActive: function preventNativeActive(e) {
+	            if (!this.typing) e.preventDefault();
+	        },
 	        begin: function begin() {
 	            this.typing = true;
 	        },
@@ -829,10 +846,14 @@
 	            var inactive = arguments.length <= 0 || arguments[0] === undefined ? true : arguments[0];
 
 	            var result = this.text.trim();
-	            result && this.$dispatch((0, _lib.E)(_templateObject3), this.index, result);
-	            this.text = '';
-	            this.typing = !inactive;
-	            inactive && this.$dispatch((0, _lib.E)(_templateObject4), this.$els.input);
+	            if (result) {
+	                this.$dispatch((0, _lib._E)(_templateObject3), this.index, result);
+	                this.text = '';
+	            }
+	            if (inactive === true) {
+	                this.typing = false;
+	                this.$dispatch((0, _lib.E)(_templateObject4), this.$els.input);
+	            }
 	        },
 	        charLen: function charLen(str) {
 	            var charNum = 0;
@@ -849,11 +870,11 @@
 	            var native = false;
 
 	            if (key === _lib.KEY_CODE.RIGHT && valLen === 0) {
-	                this.$dispatch((0, _lib.E)(_templateObject5), this.index + 1);
+	                this.$dispatch((0, _lib._E)(_templateObject5), this.index + 1);
 	            } else if (key === _lib.KEY_CODE.LEFT && valLen === 0) {
-	                this.$dispatch((0, _lib.E)(_templateObject5), this.index - 1);
+	                this.$dispatch((0, _lib._E)(_templateObject5), this.index - 1);
 	            } else if (key === _lib.KEY_CODE.BACKSPACE && cursor === 0) {
-	                this.$dispatch((0, _lib.E)(_templateObject6), this.index - 1);
+	                this.$dispatch((0, _lib._E)(_templateObject6), this.index - 1);
 	            } else if (key === _lib.KEY_CODE.TAB) {
 	                this.finish(false);
 	            } else native = true;
@@ -874,13 +895,13 @@
 /* 18 */
 /***/ function(module, exports) {
 
-	module.exports = "\n<span :class=\"klass.gap\" @click=\"begin\" _v-0aec893e=\"\">\n    <input type=\"text\" :class=\"klass.input\" :style=\"{width: base + charLen(text) + 'ch'}\" v-el:input=\"\" v-model=\"text\" @blur=\"finish\" @keydown=\"keyPress\" _v-0aec893e=\"\">\n        <slot v-if=\"!typing\" _v-0aec893e=\"\"></slot>\n</span>\n";
+	module.exports = "\n<span :class=\"klass.gap\" @click=\"begin\" _v-0aec893e=\"\">\n    <input type=\"text\" :class=\"klass.input\" :style=\"{width: base + charLen(text) + 'ch'}\" v-el:input=\"\" v-model=\"text\" @mousedown=\"preventNativeActive\" @blur=\"finish(true)\" @keydown=\"keyPress\" _v-0aec893e=\"\">\n        <slot v-if=\"!typing\" _v-0aec893e=\"\"></slot>\n</span>\n";
 
 /***/ },
 /* 19 */
 /***/ function(module, exports) {
 
-	module.exports = "\n<div :class=\"klass.container\" @click.self=\"inputLast\" _v-607a9ed3=\"\">\n    <template v-for=\"(index, item) in tags\" :track-by=\"trackBy\">\n        <typing :index=\"index\" _v-607a9ed3=\"\"></typing>\n        <tag :text=\"item | getText\" :remove=\"item | getRemoveHandle index\" _v-607a9ed3=\"\">\n        </tag>\n    </template>\n    <typing :index=\"length\" _v-607a9ed3=\"\">\n        <span v-if=\"placeholder\" :class=\"klass.placeholder\" _v-607a9ed3=\"\">{{placeholder}}</span>\n    </typing>\n</div>\n";
+	module.exports = "\n<div :class=\"klass.container\" @mousedown.self.prevent=\"\" @click.self=\"inputLast\" _v-607a9ed3=\"\">\n    <template v-for=\"(index, item) in tags\" :track-by=\"trackBy\">\n        <typing :index=\"index\" _v-607a9ed3=\"\"></typing>\n        <tag :text=\"item | getText\" :remove=\"item | getRemoveHandle index\" _v-607a9ed3=\"\">\n        </tag>\n    </template>\n    <typing :index=\"length\" _v-607a9ed3=\"\">\n        <span v-if=\"placeholder\" :class=\"klass.placeholder\" _v-607a9ed3=\"\">{{placeholder}}</span>\n    </typing>\n</div>\n";
 
 /***/ }
 /******/ ])));
