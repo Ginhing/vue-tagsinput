@@ -5,8 +5,8 @@
             :style="{width: base + charLen(text) + 'ch'}"
             v-el:input
             v-model="text"
-            @mousedown.prevent
-            @blur="finish"
+            @mousedown="preventNativeActive"
+            @blur="finish(true)"
             @keydown="keyPress" />
             <slot v-if="!typing"></slot>
     </span>
@@ -64,15 +64,22 @@ export default {
         }
     },
     methods: {
+        preventNativeActive(e) {
+            if (!this.typing) e.preventDefault()
+        },
         begin() {
             this.typing = true
         },
         finish(inactive = true) {
             let result = this.text.trim()
-            result && this.$dispatch(_E`insert`, this.index, result)
-            this.text = ''
-            this.typing = !inactive
-            inactive && this.$dispatch(E`blur`, this.$els.input)
+            if (result) {
+                this.$dispatch(_E`insert`, this.index, result)
+                this.text = ''
+            }
+            if (inactive === true) {
+                this.typing = false
+                this.$dispatch(E`blur`, this.$els.input)
+            }
         },
         charLen(str) {
             let charNum = 0

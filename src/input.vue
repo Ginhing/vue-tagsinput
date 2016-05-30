@@ -1,5 +1,8 @@
 <template>
-    <div :class="klass.container" @click.self="inputLast">
+    <div :class="klass.container"
+        @mousedown.self.prevent
+        @click.self="inputLast"
+        >
         <template v-for="(index, item) in tags" :track-by="trackBy">
             <typing :index="index"></typing>
             <tag
