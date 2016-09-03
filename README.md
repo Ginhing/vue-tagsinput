@@ -7,8 +7,10 @@
 >kerboard supported(left, right, backspace, tab).
 ![](anim.gif)
 
+**TODO: work with Vue 2.0**
+
 ## Requirement
-- vue: `>= 1.0.0`
+- vue: `^1.0.0`
 
 ## Usage
 ```html
