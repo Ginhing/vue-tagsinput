@@ -26,6 +26,9 @@ new Vue({
         },
         setRO(item) {
             return item.id === 0
+        },
+        validator(text) {
+            return /([a-zA-Z0-9._-]+@[a-zA-Z0-9._-]+\.[a-zA-Z0-9._-]+)/gi.test(text)
         }
     },
     components: {
