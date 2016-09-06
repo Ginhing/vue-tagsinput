@@ -1,41 +1,41 @@
 (function(e, a) { for(var i in a) e[i] = a[i]; }(exports, /******/ (function(modules) { // webpackBootstrap
 /******/ 	// The module cache
 /******/ 	var installedModules = {};
-
+/******/
 /******/ 	// The require function
 /******/ 	function __webpack_require__(moduleId) {
-
+/******/
 /******/ 		// Check if module is in cache
 /******/ 		if(installedModules[moduleId])
 /******/ 			return installedModules[moduleId].exports;
-
+/******/
 /******/ 		// Create a new module (and put it into the cache)
 /******/ 		var module = installedModules[moduleId] = {
 /******/ 			exports: {},
 /******/ 			id: moduleId,
 /******/ 			loaded: false
 /******/ 		};
-
+/******/
 /******/ 		// Execute the module function
 /******/ 		modules[moduleId].call(module.exports, module, module.exports, __webpack_require__);
-
+/******/
 /******/ 		// Flag the module as loaded
 /******/ 		module.loaded = true;
-
+/******/
 /******/ 		// Return the exports of the module
 /******/ 		return module.exports;
 /******/ 	}
-
-
+/******/
+/******/
 /******/ 	// expose the modules object (__webpack_modules__)
 /******/ 	__webpack_require__.m = modules;
-
+/******/
 /******/ 	// expose the module cache
 /******/ 	__webpack_require__.c = installedModules;
-
+/******/
 /******/ 	// __webpack_public_path__
 /******/ 	__webpack_require__.p = "";
-
+/******/
 /******/ 	// Load entry module and return exports
 /******/ 	return __webpack_require__(0);
 /******/ })
@@ -45,7 +45,7 @@
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
-
+	
 	module.exports = __webpack_require__(1);
 
 /***/ },
@@ -72,7 +72,7 @@
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
-
+	
 	// load the styles
 	var content = __webpack_require__(3);
 	if(typeof content === 'string') content = [[module.id, content, '']];
@@ -83,8 +83,8 @@
 	if(false) {
 		// When the styles change, update the <style> tags
 		if(!content.locals) {
-			module.hot.accept("!!./../node_modules/css-loader/index.js!./../node_modules/vue-loader/lib/style-rewriter.js?id=_v-607a9ed3&scoped=true!./../node_modules/vue-loader/lib/selector.js?type=style&index=0!./input.vue", function() {
-				var newContent = require("!!./../node_modules/css-loader/index.js!./../node_modules/vue-loader/lib/style-rewriter.js?id=_v-607a9ed3&scoped=true!./../node_modules/vue-loader/lib/selector.js?type=style&index=0!./input.vue");
+			module.hot.accept("!!./../node_modules/css-loader/index.js!./../node_modules/vue-loader/lib/style-rewriter.js?id=_v-2a0762c6&scoped=true!./../node_modules/vue-loader/lib/selector.js?type=style&index=0!./input.vue", function() {
+				var newContent = require("!!./../node_modules/css-loader/index.js!./../node_modules/vue-loader/lib/style-rewriter.js?id=_v-2a0762c6&scoped=true!./../node_modules/vue-loader/lib/selector.js?type=style&index=0!./input.vue");
 				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
 				update(newContent);
 			});
@@ -99,11 +99,11 @@
 
 	exports = module.exports = __webpack_require__(4)();
 	// imports
-
-
+	
+	
 	// module
-	exports.push([module.id, "\n.tags-input[_v-607a9ed3] {\n    display: -webkit-box;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-orient: horizontal;\n    -webkit-box-direction: normal;\n        -ms-flex-direction: row;\n            flex-direction: row;\n    -webkit-box-align: center;\n        -ms-flex-align: center;\n            align-items: center;\n    -ms-flex-wrap: wrap;\n        flex-wrap: wrap;\n    box-shadow: 0 0 0.15rem rgba(0, 0, 0, 0.3);\n    font-size: 0.75rem;\n    padding: 0.1rem 0\n}\n.placeholder[_v-607a9ed3] {\n    display: inline-block;\n    color: #A9A9A9;\n    line-height: 2em;\n    white-space: nowrap;\n}\n", ""]);
-
+	exports.push([module.id, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n.tags-input[_v-2a0762c6] {\n    display: -webkit-box;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-orient: horizontal;\n    -webkit-box-direction: normal;\n        -ms-flex-direction: row;\n            flex-direction: row;\n    -webkit-box-align: center;\n        -ms-flex-align: center;\n            align-items: center;\n    -ms-flex-wrap: wrap;\n        flex-wrap: wrap;\n    box-shadow: 0 0 0.15rem rgba(0, 0, 0, 0.3);\n    font-size: 0.75rem;\n    padding: 0.1rem 0\n}\n.placeholder[_v-2a0762c6] {\n    display: inline-block;\n    color: #A9A9A9;\n    line-height: 2em;\n    white-space: nowrap;\n}\n", ""]);
+	
 	// exports
 
 
@@ -118,7 +118,7 @@
 	// css base code, injected by the css-loader
 	module.exports = function() {
 		var list = [];
-
+	
 		// return the list of modules as css string
 		list.toString = function toString() {
 			var result = [];
@@ -132,7 +132,7 @@
 			}
 			return result.join("");
 		};
-
+	
 		// import a list of modules into the list
 		list.i = function(modules, mediaQuery) {
 			if(typeof modules === "string")
@@ -188,23 +188,23 @@
 		singletonElement = null,
 		singletonCounter = 0,
 		styleElementsInsertedAtTop = [];
-
+	
 	module.exports = function(list, options) {
 		if(false) {
 			if(typeof document !== "object") throw new Error("The style-loader cannot be used in a non-browser environment");
 		}
-
+	
 		options = options || {};
 		// Force single-tag solution on IE6-9, which has a hard limit on the # of <style>
 		// tags it will allow on a page
 		if (typeof options.singleton === "undefined") options.singleton = isOldIE();
-
+	
 		// By default, add <style> tags to the bottom of <head>.
 		if (typeof options.insertAt === "undefined") options.insertAt = "bottom";
-
+	
 		var styles = listToStyles(list);
 		addStylesToDom(styles, options);
-
+	
 		return function update(newList) {
 			var mayRemove = [];
 			for(var i = 0; i < styles.length; i++) {
@@ -227,7 +227,7 @@
 			}
 		};
 	}
-
+	
 	function addStylesToDom(styles, options) {
 		for(var i = 0; i < styles.length; i++) {
 			var item = styles[i];
@@ -249,7 +249,7 @@
 			}
 		}
 	}
-
+	
 	function listToStyles(list) {
 		var styles = [];
 		var newStyles = {};
@@ -267,7 +267,7 @@
 		}
 		return styles;
 	}
-
+	
 	function insertStyleElement(options, styleElement) {
 		var head = getHeadElement();
 		var lastStyleElementInsertedAtTop = styleElementsInsertedAtTop[styleElementsInsertedAtTop.length - 1];
@@ -286,7 +286,7 @@
 			throw new Error("Invalid value for parameter 'insertAt'. Must be 'top' or 'bottom'.");
 		}
 	}
-
+	
 	function removeStyleElement(styleElement) {
 		styleElement.parentNode.removeChild(styleElement);
 		var idx = styleElementsInsertedAtTop.indexOf(styleElement);
@@ -294,17 +294,17 @@
 			styleElementsInsertedAtTop.splice(idx, 1);
 		}
 	}
-
+	
 	function createStyleElement(options) {
 		var styleElement = document.createElement("style");
 		styleElement.type = "text/css";
 		insertStyleElement(options, styleElement);
 		return styleElement;
 	}
-
+	
 	function addStyle(obj, options) {
 		var styleElement, update, remove;
-
+	
 		if (options.singleton) {
 			var styleIndex = singletonCounter++;
 			styleElement = singletonElement || (singletonElement = createStyleElement(options));
@@ -317,9 +317,9 @@
 				removeStyleElement(styleElement);
 			};
 		}
-
+	
 		update(obj);
-
+	
 		return function updateStyle(newObj) {
 			if(newObj) {
 				if(newObj.css === obj.css && newObj.media === obj.media && newObj.sourceMap === obj.sourceMap)
@@ -330,19 +330,19 @@
 			}
 		};
 	}
-
+	
 	var replaceText = (function () {
 		var textStore = [];
-
+	
 		return function (index, replacement) {
 			textStore[index] = replacement;
 			return textStore.filter(Boolean).join('\n');
 		};
 	})();
-
+	
 	function applyToSingletonTag(styleElement, index, remove, obj) {
 		var css = remove ? "" : obj.css;
-
+	
 		if (styleElement.styleSheet) {
 			styleElement.styleSheet.cssText = replaceText(index, css);
 		} else {
@@ -356,16 +356,16 @@
 			}
 		}
 	}
-
+	
 	function applyToTag(styleElement, obj) {
 		var css = obj.css;
 		var media = obj.media;
 		var sourceMap = obj.sourceMap;
-
+	
 		if (media) {
 			styleElement.setAttribute("media", media);
 		}
-
+	
 		if (sourceMap) {
 			// https://developer.chrome.com/devtools/docs/javascript-debugging
 			// this makes source maps inside style tags work properly in Chrome
@@ -373,7 +373,7 @@
 			// http://stackoverflow.com/a/26603875
 			css += "\n/*# sourceMappingURL=data:application/json;base64," + btoa(unescape(encodeURIComponent(JSON.stringify(sourceMap)))) + " */";
 		}
-
+	
 		if (styleElement.styleSheet) {
 			styleElement.styleSheet.cssText = css;
 		} else {
@@ -390,24 +390,24 @@
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
-
+	
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
 	});
-
+	
 	var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol ? "symbol" : typeof obj; };
-
+	
 	var _events;
-
+	
 	var _templateObject = _taggedTemplateLiteral(['insert'], ['insert']),
 	    _templateObject2 = _taggedTemplateLiteral(['activeOther'], ['activeOther']),
 	    _templateObject3 = _taggedTemplateLiteral(['active'], ['active']),
 	    _templateObject4 = _taggedTemplateLiteral(['remove'], ['remove']);
-
+	
 	var _lib = __webpack_require__(7);
-
+	
 	function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
+	
 	function _taggedTemplateLiteral(strings, raw) { return Object.freeze(Object.defineProperties(strings, { raw: { value: Object.freeze(raw) } })); } // <template>
 	//     <div :class="klass.container"
 	//         @mousedown.self.prevent
@@ -417,7 +417,8 @@
 	//             <typing :index="index"></typing>
 	//             <tag
 	//                 :text="item | getText"
-	//                 :remove="item | getRemoveHandle index">
+	//                 :remove="item | getRemoveHandle index"
+	//                 :valid="item | validate">
 	//             </tag>
 	//         </template>
 	//         <typing :index="length">
@@ -443,8 +444,8 @@
 	// }
 	// </style>
 	// <script>
-
-
+	
+	
 	exports.default = {
 	    props: {
 	        tags: {
@@ -465,7 +466,8 @@
 	        readOnly: { type: Function, default: function _default(item) {
 	                return false;
 	            } },
-	        trackBy: { type: String, default: '$index' }
+	        trackBy: { type: String, default: '$index' },
+	        validator: [String, Function]
 	    },
 	    computed: {
 	        length: function length() {
@@ -490,7 +492,7 @@
 	        },
 	        dedupe: function dedupe(tag) {
 	            var _this = this;
-
+	
 	            if (this.trackBy === '$index') return this.tags.includes(tag);else {
 	                var _ret = function () {
 	                    var field = tag[_this.trackBy];
@@ -500,7 +502,7 @@
 	                        })
 	                    };
 	                }();
-
+	
 	                if ((typeof _ret === 'undefined' ? 'undefined' : _typeof(_ret)) === "object") return _ret.v;
 	            }
 	        }
@@ -511,6 +513,14 @@
 	        },
 	        getRemoveHandle: function getRemoveHandle(item, index) {
 	            return this.readOnly(item) ? null : this.removeTag.bind(this, index);
+	        },
+	        validate: function validate(item) {
+	            var _validator = this.validator;
+	            var validator = _validator === undefined ? function () {
+	                return true;
+	            } : _validator;
+	
+	            return typeof validator === 'function' ? validator(item) : new RegExp(validator.toString(), 'g').test(this.render(item));
 	        }
 	    },
 	    components: {
@@ -520,12 +530,14 @@
 	};
 	// </script>
 
+	/* generated by vue-loader */
+
 /***/ },
 /* 7 */
 /***/ function(module, exports) {
 
 	'use strict';
-
+	
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
 	});
@@ -537,21 +549,21 @@
 	    TAB: 9,
 	    BACKSPACE: 8
 	};
-
+	
 	//inner event name parser
 	function _E(str) {
 	    for (var _len = arguments.length, vals = Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
 	        vals[_key - 1] = arguments[_key];
 	    }
-
+	
 	    return '__' + E.apply(undefined, arguments) + '__';
 	}
-
+	
 	//public event name parser
 	function E(str) {
 	    return str[0] + '.vue-tagsinput';
 	}
-
+	
 	var klass = exports.klass = {
 	    container: 'tags-input',
 	    input: 'input',
@@ -584,7 +596,7 @@
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
-
+	
 	// load the styles
 	var content = __webpack_require__(10);
 	if(typeof content === 'string') content = [[module.id, content, '']];
@@ -595,8 +607,8 @@
 	if(false) {
 		// When the styles change, update the <style> tags
 		if(!content.locals) {
-			module.hot.accept("!!./../node_modules/css-loader/index.js!./../node_modules/vue-loader/lib/style-rewriter.js?id=_v-066e46e3&scoped=true!./../node_modules/vue-loader/lib/selector.js?type=style&index=0!./tag.vue", function() {
-				var newContent = require("!!./../node_modules/css-loader/index.js!./../node_modules/vue-loader/lib/style-rewriter.js?id=_v-066e46e3&scoped=true!./../node_modules/vue-loader/lib/selector.js?type=style&index=0!./tag.vue");
+			module.hot.accept("!!./../node_modules/css-loader/index.js!./../node_modules/vue-loader/lib/style-rewriter.js?id=_v-34316b96&scoped=true!./../node_modules/vue-loader/lib/selector.js?type=style&index=0!./tag.vue", function() {
+				var newContent = require("!!./../node_modules/css-loader/index.js!./../node_modules/vue-loader/lib/style-rewriter.js?id=_v-34316b96&scoped=true!./../node_modules/vue-loader/lib/selector.js?type=style&index=0!./tag.vue");
 				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
 				update(newContent);
 			});
@@ -611,11 +623,11 @@
 
 	exports = module.exports = __webpack_require__(4)();
 	// imports
-
-
+	
+	
 	// module
-	exports.push([module.id, "\n.tag[_v-066e46e3] {\n    border: 1px solid #e0e0e0;\n    border-radius: 3px;\n    color: #858585;\n    font-weight: normal;\n    font-size: 1.1em;\n    padding: 0 0.5ch;\n}\n.remove[_v-066e46e3] {\n    cursor: pointer;\n}\n.remove[_v-066e46e3]::after{\n    color: rgba(0, 0, 0, 0.6);\n    content: \"\\2A2F\";\n    padding-left: 1px;\n}\n.hl-click[_v-066e46e3]:hover:active {\n    box-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);\n}\n", ""]);
-
+	exports.push([module.id, "\n\n\n\n\n\n\n\n\n\n.tag[_v-34316b96] {\n    border: 1px solid #e0e0e0;\n    border-radius: 3px;\n    color: #858585;\n    font-weight: normal;\n    font-size: 1.1em;\n    padding: 0 0.5ch;\n}\n.tag[invalid][_v-34316b96] {\n    border: 1px solid red;\n}\n.remove[_v-34316b96] {\n    cursor: pointer;\n}\n.remove[_v-34316b96]::after{\n    color: rgba(0, 0, 0, 0.6);\n    content: \"\\2A2F\";\n    padding-left: 1px;\n}\n.hl-click[_v-34316b96]:hover:active {\n    box-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);\n}\n", ""]);
+	
 	// exports
 
 
@@ -624,12 +636,12 @@
 /***/ function(module, exports) {
 
 	"use strict";
-
+	
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
 	});
 	// <template>
-	//     <span :class="klass.tag">
+	//     <span :class="klass.tag" :invalid="!valid">
 	//         {{text}}
 	//         <span v-if="remove"
 	//             class="remove hl-click"
@@ -645,6 +657,9 @@
 	//     font-weight: normal;
 	//     font-size: 1.1em;
 	//     padding: 0 0.5ch;
+	// }
+	// .tag[invalid] {
+	//     border: 1px solid red;
 	// }
 	// .remove {
 	//     cursor: pointer;
@@ -667,7 +682,8 @@
 	        },
 	        remove: {
 	            type: Function
-	        }
+	        },
+	        valid: { type: Boolean, default: true }
 	    },
 	    computed: {
 	        klass: function klass() {
@@ -677,11 +693,13 @@
 	};
 	// </script>
 
+	/* generated by vue-loader */
+
 /***/ },
 /* 12 */
 /***/ function(module, exports) {
 
-	module.exports = "\n<span :class=\"klass.tag\" _v-066e46e3=\"\">\n    {{text}}\n    <span v-if=\"remove\" class=\"remove hl-click\" @click=\"remove\" _v-066e46e3=\"\">\n    </span>\n</span>\n";
+	module.exports = "\n<span :class=\"klass.tag\" :invalid=\"!valid\" _v-34316b96=\"\">\n    {{text}}\n    <span v-if=\"remove\" class=\"remove hl-click\" @click=\"remove\" _v-34316b96=\"\">\n    </span>\n</span>\n";
 
 /***/ },
 /* 13 */
@@ -707,7 +725,7 @@
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
-
+	
 	// load the styles
 	var content = __webpack_require__(15);
 	if(typeof content === 'string') content = [[module.id, content, '']];
@@ -718,8 +736,8 @@
 	if(false) {
 		// When the styles change, update the <style> tags
 		if(!content.locals) {
-			module.hot.accept("!!./../node_modules/css-loader/index.js!./../node_modules/vue-loader/lib/style-rewriter.js?id=_v-0aec893e&scoped=true!./../node_modules/vue-loader/lib/selector.js?type=style&index=0!./typing.vue", function() {
-				var newContent = require("!!./../node_modules/css-loader/index.js!./../node_modules/vue-loader/lib/style-rewriter.js?id=_v-0aec893e&scoped=true!./../node_modules/vue-loader/lib/selector.js?type=style&index=0!./typing.vue");
+			module.hot.accept("!!./../node_modules/css-loader/index.js!./../node_modules/vue-loader/lib/style-rewriter.js?id=_v-72f843ab&scoped=true!./../node_modules/vue-loader/lib/selector.js?type=style&index=0!./typing.vue", function() {
+				var newContent = require("!!./../node_modules/css-loader/index.js!./../node_modules/vue-loader/lib/style-rewriter.js?id=_v-72f843ab&scoped=true!./../node_modules/vue-loader/lib/selector.js?type=style&index=0!./typing.vue");
 				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
 				update(newContent);
 			});
@@ -734,11 +752,11 @@
 
 	exports = module.exports = __webpack_require__(4)();
 	// imports
-
-
+	
+	
 	// module
-	exports.push([module.id, "\ninput.input[_v-0aec893e] {\n    outline: none;\n    box-shadow: none;\n    border: none;\n    background-color: transparent;\n    font-family: monospace;\n    padding: 0 0.5ch;\n    line-height: 2em;\n}\n.gap[_v-0aec893e] {\n\n}\n", ""]);
-
+	exports.push([module.id, "\n\n\n\n\n\n\n\n\n\n\n\n\n\ninput.input[_v-72f843ab] {\n    outline: none;\n    box-shadow: none;\n    border: none;\n    background-color: transparent;\n    font-family: monospace;\n    padding: 0 0.5ch;\n    line-height: 2em;\n}\n.gap[_v-72f843ab] {\n\n}\n", ""]);
+	
 	// exports
 
 
@@ -747,28 +765,28 @@
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
-
+	
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
 	});
-
+	
 	var _templateObject = _taggedTemplateLiteral(['focus'], ['focus']),
 	    _templateObject2 = _taggedTemplateLiteral(['active'], ['active']),
 	    _templateObject3 = _taggedTemplateLiteral(['insert'], ['insert']),
 	    _templateObject4 = _taggedTemplateLiteral(['blur'], ['blur']),
 	    _templateObject5 = _taggedTemplateLiteral(['activeOther'], ['activeOther']),
 	    _templateObject6 = _taggedTemplateLiteral(['remove'], ['remove']);
-
+	
 	var _vue = __webpack_require__(17);
-
+	
 	var _vue2 = _interopRequireDefault(_vue);
-
+	
 	var _lib = __webpack_require__(7);
-
+	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
+	
 	function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
+	
 	function _taggedTemplateLiteral(strings, raw) { return Object.freeze(Object.defineProperties(strings, { raw: { value: Object.freeze(raw) } })); } // <template>
 	//     <span :class="klass.gap" @click="begin">
 	//         <input type="text"
@@ -797,8 +815,8 @@
 	// }
 	// </style>
 	// <script>
-
-
+	
+	
 	exports.default = {
 	    props: {
 	        index: {
@@ -812,7 +830,7 @@
 	            text: ''
 	        };
 	    },
-
+	
 	    computed: {
 	        base: function base() {
 	            return this.typing ? 2 : 0;
@@ -824,7 +842,7 @@
 	    watch: {
 	        typing: function typing(val) {
 	            var _this = this;
-
+	
 	            val && _vue2.default.nextTick(function (_) {
 	                var $el = _this.$els.input;
 	                $el.focus();
@@ -844,7 +862,7 @@
 	        },
 	        finish: function finish() {
 	            var inactive = arguments.length <= 0 || arguments[0] === undefined ? true : arguments[0];
-
+	
 	            var result = this.text.trim();
 	            if (result) {
 	                this.$dispatch((0, _lib._E)(_templateObject3), this.index, result);
@@ -868,7 +886,7 @@
 	            var valLen = $input.value.length;
 	            var key = e.keyCode;
 	            var native = false;
-
+	
 	            if (key === _lib.KEY_CODE.RIGHT && valLen === 0) {
 	                this.$dispatch((0, _lib._E)(_templateObject5), this.index + 1);
 	            } else if (key === _lib.KEY_CODE.LEFT && valLen === 0) {
@@ -878,12 +896,13 @@
 	            } else if (key === _lib.KEY_CODE.TAB) {
 	                this.finish(false);
 	            } else native = true;
-
+	
 	            !native && e.preventDefault();
 	        }
 	    }
 	};
 	// </script>
+	/* generated by vue-loader */
 
 /***/ },
 /* 17 */
@@ -895,13 +914,14 @@
 /* 18 */
 /***/ function(module, exports) {
 
-	module.exports = "\n<span :class=\"klass.gap\" @click=\"begin\" _v-0aec893e=\"\">\n    <input type=\"text\" :class=\"klass.input\" :style=\"{width: base + charLen(text) + 'ch'}\" v-el:input=\"\" v-model=\"text\" @mousedown=\"preventNativeActive\" @blur=\"finish(true)\" @keydown=\"keyPress\" _v-0aec893e=\"\">\n        <slot v-if=\"!typing\" _v-0aec893e=\"\"></slot>\n</span>\n";
+	module.exports = "\n<span :class=\"klass.gap\" @click=\"begin\" _v-72f843ab=\"\">\n    <input type=\"text\" :class=\"klass.input\" :style=\"{width: base + charLen(text) + 'ch'}\" v-el:input=\"\" v-model=\"text\" @mousedown=\"preventNativeActive\" @blur=\"finish(true)\" @keydown=\"keyPress\" _v-72f843ab=\"\">\n        <slot v-if=\"!typing\" _v-72f843ab=\"\"></slot>\n</span>\n";
 
 /***/ },
 /* 19 */
 /***/ function(module, exports) {
 
-	module.exports = "\n<div :class=\"klass.container\" @mousedown.self.prevent=\"\" @click.self=\"inputLast\" _v-607a9ed3=\"\">\n    <template v-for=\"(index, item) in tags\" :track-by=\"trackBy\">\n        <typing :index=\"index\" _v-607a9ed3=\"\"></typing>\n        <tag :text=\"item | getText\" :remove=\"item | getRemoveHandle index\" _v-607a9ed3=\"\">\n        </tag>\n    </template>\n    <typing :index=\"length\" _v-607a9ed3=\"\">\n        <span v-if=\"placeholder\" :class=\"klass.placeholder\" _v-607a9ed3=\"\">{{placeholder}}</span>\n    </typing>\n</div>\n";
+	module.exports = "\n<div :class=\"klass.container\" @mousedown.self.prevent=\"\" @click.self=\"inputLast\" _v-2a0762c6=\"\">\n    <template v-for=\"(index, item) in tags\" :track-by=\"trackBy\">\n        <typing :index=\"index\" _v-2a0762c6=\"\"></typing>\n        <tag :text=\"item | getText\" :remove=\"item | getRemoveHandle index\" :valid=\"item | validate\" _v-2a0762c6=\"\">\n        </tag>\n    </template>\n    <typing :index=\"length\" _v-2a0762c6=\"\">\n        <span v-if=\"placeholder\" :class=\"klass.placeholder\" _v-2a0762c6=\"\">{{placeholder}}</span>\n    </typing>\n</div>\n";
 
 /***/ }
 /******/ ])));
+//# sourceMappingURL=vue-tagsinput.js.map
