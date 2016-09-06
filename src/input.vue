@@ -7,7 +7,8 @@
             <typing :index="index"></typing>
             <tag
                 :text="item | getText"
-                :remove="item | getRemoveHandle index">
+                :remove="item | getRemoveHandle index"
+                :valid="item | validate">
             </tag>
         </template>
         <typing :index="length">
@@ -46,7 +47,8 @@ export default {
         insert: {type: Function, default: text => text},
         render: {type: Function, default: item => item},
         readOnly: {type: Function, default: item => false},
-        trackBy: {type: String, default: '$index'}
+        trackBy: {type: String, default: '$index'},
+        validator: [String, Function]
     },
     computed: {
         length() {
@@ -89,6 +91,12 @@ export default {
         },
         getRemoveHandle(item, index) {
             return this.readOnly(item) ? null : this.removeTag.bind(this, index)
+        },
+        validate(item) {
+            let {validator = () => true} = this
+            return typeof validator === 'function'
+                ? validator(item)
+                : new RegExp(validator.toString(), 'g').test(this.render(item))
         }
     },
     components:{

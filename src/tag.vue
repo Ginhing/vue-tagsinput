@@ -1,5 +1,5 @@
 <template>
-    <span :class="klass.tag">
+    <span :class="klass.tag" :invalid="!valid">
         {{text}}
         <span v-if="remove"
             class="remove hl-click"
@@ -15,6 +15,9 @@
     font-weight: normal;
     font-size: 1.1em;
     padding: 0 0.5ch;
+}
+.tag[invalid] {
+    border: 1px solid red;
 }
 .remove {
     cursor: pointer;
@@ -37,7 +40,8 @@ export default {
         },
         remove: {
             type: Function
-        }
+        },
+        valid: {type: Boolean, default: true},
     },
     computed: {
         klass() {

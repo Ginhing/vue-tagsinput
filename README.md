@@ -20,6 +20,7 @@
         :insert="insertTag"
         :render="renderTag"
         :read-only="setRO"
+        :validator="validator"
         track-by="text"
     ></tags-input>
 </div>
@@ -34,6 +35,7 @@
 - insert(func): transform the text of tag-object before insert your tags-array
 - render(func): transform your tag-object into a text to display
 - readOnly(func): set your tag-object read only or not
+- validator(func|string): set the DOM element of tag having attribute 'invalid' or not
 - trackBy(string): a field of tag-object to dedupe.
 
 ## Events

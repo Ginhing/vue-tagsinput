@@ -18,6 +18,7 @@ var config = {
         ]
     },
     plugins: [],
+    devtool: 'source-map',
     babel: {
         presets: ['es2015', 'stage-2'],
         plugins: []
@@ -50,7 +51,7 @@ if (TARGET === 'build') {
             path: path.resolve(__dirname, 'example'),
             filename: 'example.js'
         },
-        devtool: '#cheap-module-eval-source-map'
+        devtool: 'eval'
     })
 }
 

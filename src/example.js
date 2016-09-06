@@ -26,6 +26,9 @@ new Vue({
         },
         setRO(item) {
             return item.id === 0
+        },
+        validator(item) {
+            return /^\w*$/.test(item.text)
         }
     },
     components: {
