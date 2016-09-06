@@ -1,5 +1,5 @@
 <template>
-    <span :class="[klass.tag, !valid ? 'invalid' : '']">
+    <span :class="klass.tag" :invalid="!valid">
         {{text}}
         <span v-if="remove"
             class="remove hl-click"
@@ -16,7 +16,7 @@
     font-size: 1.1em;
     padding: 0 0.5ch;
 }
-.tag.invalid {
+.tag[invalid] {
     border: 1px solid red;
 }
 .remove {

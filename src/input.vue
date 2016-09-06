@@ -93,10 +93,10 @@ export default {
             return this.readOnly(item) ? null : this.removeTag.bind(this, index)
         },
         validate(item) {
-            let result = true
-            this.validator && typeof(this.validator) === 'function' && (result = this.validator(this.render(item)))
-            this.validator && typeof(this.validator) === 'string' && (result = new RegExp(this.validator, 'g').test(this.render(item)))
-            return result
+            let {validator = () => true} = this
+            return typeof validator === 'function'
+                ? validator(item)
+                : new RegExp(validator.toString(), 'g').test(this.render(item))
         }
     },
     components:{
