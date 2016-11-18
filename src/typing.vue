@@ -26,7 +26,6 @@ input.input {
 }
 </style>
 <script>
-import Vue from 'vue'
 import {KEY_CODE, E, _E} from './lib'
 export default {
     props: {
@@ -51,7 +50,7 @@ export default {
     },
     watch: {
         typing(val) {
-            val && Vue.nextTick(_ => {
+            val && this.$nextTick(_ => {
                 let $el = this.$els.input
                 $el.focus()
                 this.$dispatch(E`focus`, $el)
