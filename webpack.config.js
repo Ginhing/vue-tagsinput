@@ -1,9 +1,10 @@
+/* eslint-env node */
 const path = require('path')
 const webpack = require('webpack')
 
 const TARGET = process.env.npm_lifecycle_event
 
-var config = {
+let config = {
     entry: './src/index.js',
     output: {
         path: path.resolve(__dirname, 'dist/'),

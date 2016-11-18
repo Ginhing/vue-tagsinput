@@ -1,0 +1,20 @@
+---
+  # parser: babel-eslint
+  parserOptions:
+    sourceType: module
+    ecmaVersion: 7
+    ecmaFeatures:
+      jsx: true
+  plugins:
+    - react
+    - vue
+  extends:
+    - eslint:recommended
+    - plugin:react/recommended
+  env:
+    jest: true
+    es6: true
+  rules:
+    no-var: 2
+    no-unused-vars: 1
+    semi: [1, never]
