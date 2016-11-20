@@ -22,8 +22,8 @@ input.input {
   padding: 0 0.5ch;
   line-height: 2em;
 }
-.gap {
-
+.gap:last-child {
+  flex: 1;
 }
 </style>
 <script>

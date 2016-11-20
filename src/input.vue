@@ -1,5 +1,5 @@
 <template>
-  <div :class="klass.container" @mousedown.self.prevent @click.self="inputLast">
+  <div :class="klass.container" @mousedown.self.prevent>
     <template v-for="(index, item) in tags" :track-by="trackBy">
       <typing :index="index"></typing>
       <tag :text="item | getText" :remove="item | getRemoveHandle index" :valid="item | validate">
@@ -65,9 +65,6 @@ export default {
         let canRM = !this.readOnly(this.tags[index])
         canRM && this.tags.splice(index, 1)
       }
-    },
-    inputLast() {
-      this.$broadcast(_E `active`, this.length)
     },
     dedupe(tag) {
       if (this.trackBy === '$index') return this.tags.includes(tag)
