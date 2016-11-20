@@ -3932,6 +3932,10 @@ vue@^1.0.21:
   dependencies:
     envify "^3.4.0"
 
+vuept@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/vuept/-/vuept-1.0.0.tgz#e968ddadc54251498878f32491dfc84eb349003c"
+
 watchpack@^0.2.1:
   version "0.2.9"
   resolved "http://registry.npm.taobao.org/watchpack/download/watchpack-0.2.9.tgz#62eaa4ab5e5ba35fdfc018275626e3c0f5e3fb0b"

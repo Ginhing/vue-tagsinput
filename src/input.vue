@@ -29,37 +29,17 @@
 }
 </style>
 <script>
+import {arr, func, str, obj} from 'vuept'
 import { _E, klass } from './lib'
 export default {
   props: {
-    tags: {
-      twoWay: true,
-      type: Array,
-      required: true
-    },
-    placeholder: {
-      type: String
-    },
-    klass: {
-      type: Object,
-      default: () => klass
-    },
-    insert: {
-      type: Function,
-      default: text => text
-    },
-    render: {
-      type: Function,
-      default: item => item
-    },
-    readOnly: {
-      type: Function,
-      default: item => false
-    },
-    trackBy: {
-      type: String,
-      default: '$index'
-    },
+    tags: arr.required,
+    placeholder: str,
+    klass: obj.default(() => klass),
+    insert: func.default(text => text),
+    render: func.default(item => item),
+    readOnly: func.default(() => false),
+    trackBy: str.default('$index'),
     validator: [String, Function]
   },
   computed: {
