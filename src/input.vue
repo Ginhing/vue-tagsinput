@@ -2,7 +2,7 @@
   <div :class="klass.container" @mousedown.self.prevent>
     <template v-for="(index, item) in tags | normalizeTagItems" :track-by="trackBy">
       <typing :index="index"></typing>
-      <tag :text="item.text" :remove="item | getRemoveHandle index" :valid="!item.invalid">
+      <tag :text="item.text" :remove="item | getRemoveHandle index" :invalid="item.invalid">
       </tag>
     </template>
     <typing :index="length">

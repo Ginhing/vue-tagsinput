@@ -1,8 +1,8 @@
 <template>
-  <span :class="klass.tag" :invalid="!valid">
+  <span :class="klass.tag" :invalid="invalid">
     {{text}}
     <span v-if="remove"
-      class="remove hl-click"
+      class="hl-click"
       @click="remove"
     ></span>
   </span>
@@ -21,11 +21,11 @@
   border: 1px solid red;
 }
 
-.remove {
+.hl-click {
   cursor: pointer;
 }
 
-.remove::after {
+.hl-click::after {
   color: rgba(0, 0, 0, 0.6);
   content: "\2a2f";
   padding-left: 1px;
@@ -36,19 +36,12 @@
 }
 </style>
 <script>
+import {str, func, bool} from 'vuept'
 export default {
   props: {
-    text: {
-      type: String,
-      required: true
-    },
-    remove: {
-      type: Function
-    },
-    valid: {
-      type: Boolean,
-      default: true
-    },
+    text: str.required,
+    remove: func.default(() => {}),
+    invalid: bool.default(false),
   },
   computed: {
     klass() {
