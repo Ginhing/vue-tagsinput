@@ -1,8 +1,8 @@
 <template>
   <div :class="klass.container" @mousedown.self.prevent>
-    <template v-for="(index, item) in tags" :track-by="trackBy">
+    <template v-for="(index, item) in tags | normalizeTagItems" :track-by="trackBy">
       <typing :index="index"></typing>
-      <tag :text="item | getText" :remove="item | getRemoveHandle index" :valid="item | validate">
+      <tag :text="item.text" :remove="item | getRemoveHandle index" :valid="!item.invalid">
       </tag>
     </template>
     <typing :index="length">
@@ -29,18 +29,21 @@
 }
 </style>
 <script>
-import {arr, func, str, obj} from 'vuept'
+import {arr, str, obj} from 'vuept'
 import { _E, klass } from './lib'
 export default {
   props: {
+    /**
+     * Array<{
+     *   text: String,
+     *   readOnly: Boolean,
+     *   invalid: Boolean
+     * }>
+     */
     tags: arr.required,
     placeholder: str,
     klass: obj.default(() => klass),
-    insert: func.default(text => text),
-    render: func.default(item => item),
-    readOnly: func.default(() => false),
     trackBy: str.default('$index'),
-    validator: [String, Function]
   },
   computed: {
     length() {
@@ -49,46 +52,39 @@ export default {
   },
   events: {
     [_E `insert`](index, text) {
-      let tag = this.insert(text)
-      tag && !this.dedupe(tag) && this.tags.splice(index, 0, tag)
+      this.insertTag(index, {text})
     },
     [_E `activeOther`](index) {
       index >= 0 &&
         index <= this.length &&
         this.$broadcast(_E `active`, index)
     },
-    [_E `remove`]: 'removeTag'
+    [_E `remove`](index) {
+      index > -1 && this.removeTag(index, undefined)
+    }
   },
   methods: {
     removeTag(index) {
-      if (index > -1) {
-        let canRM = !this.readOnly(this.tags[index])
-        canRM && this.tags.splice(index, 1)
-      }
+      !this.tags[index].readOnly && this.$emit('change', index, undefined)
     },
-    dedupe(tag) {
-      if (this.trackBy === '$index') return this.tags.includes(tag)
-      else {
-        let field = tag[this.trackBy]
-        return this.tags.some(item => item[this.trackBy] === field)
-      }
-    }
+    insertTag(index, tag) {
+      this.$emit('change', index, tag)
+    },
+    // dedupe(tag) {
+    //   if (this.trackBy === '$index') return this.tags.includes(tag)
+    //   else {
+    //     let field = tag[this.trackBy]
+    //     return this.tags.some(item => item[this.trackBy] === field)
+    //   }
+    // }
   },
   filters: {
-    getText(item) {
-      return this.render(item)
+    normalizeTagItems(items) {
+      return items.map(item => typeof item === 'string' ? {text: item} : item)
     },
     getRemoveHandle(item, index) {
-      return this.readOnly(item) ? null : this.removeTag.bind(this, index)
+      return item.readOnly ? null : () => this.removeTag(index)
     },
-    validate(item) {
-      let {
-        validator = () => true
-      } = this
-      return typeof validator === 'function' ?
-        validator(item) :
-        new RegExp(validator.toString(), 'g').test(this.render(item))
-    }
   },
   components: {
     tag: require('./tag.vue'),
