@@ -1,9 +1,9 @@
 <template>
-  <span :class="klass.gap">
+  <span :class="klass.gap" @click="$emit('click')">
     <input type="text"
         :class="klass.input"
         :style="{width: baseWidth + charLen(text) + 'ch'}"
-        v-el:input
+        ref="input"
         v-model="text"
         @mousedown="preventNativeActive"
         @blur="finishEditing"
@@ -56,7 +56,7 @@ export default {
   watch: {
     typing(val) {
       val && this.$nextTick(() => {
-        let $el = this.$els.input
+        let $el = this.$refs.input
         $el.focus()
       })
     }
@@ -85,7 +85,7 @@ export default {
       return charNum
     },
     keyPress(e) {
-      let $input = this.$els.input
+      let $input = this.$refs.input
       let cursor = $input.selectionStart
       let valLen = $input.value.length
       let key = e.keyCode

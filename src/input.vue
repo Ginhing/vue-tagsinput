@@ -1,6 +1,6 @@
 <template>
   <div :class="klass.container" @mousedown.self.prevent>
-    <template v-for="(index, item) in tags | normalizeTagItems" :track-by="trackBy">
+    <template v-for="(item, index) in normalizeTagItems">
       <typing
         :index="index"
         :typing="index === typingIndex"
@@ -13,7 +13,7 @@
         <span v-show="index === length && showPlaceholder" :class="klass.placeholder">{{placeholder}}</span>
       </typing>
       <tag v-if="index !== length"
-      :text="item.text" :remove="item | getRemoveHandle index" :invalid="item.invalid">
+      :text="item.text" :remove="getRemoveHandle(item, index)" :invalid="item.invalid">
       </tag>
     </template>
   </div>
@@ -37,7 +37,7 @@
 }
 </style>
 <script>
-import {arr, str, obj} from 'vuept'
+import {arr, obj} from 'vuept'
 import { klass } from './lib'
 export default {
   props: {
@@ -49,9 +49,8 @@ export default {
      * }>
      */
     tags: arr.required,
-    placeholder: str,
+    placeholder: String,
     klass: obj.default(() => klass),
-    trackBy: str.default('$index'),
   },
   data() {
     return {
@@ -59,6 +58,9 @@ export default {
     }
   },
   computed: {
+    normalizeTagItems() {
+      return this.tags.map(item => typeof item === 'string' ? {text: item} : item).concat(null)
+    },
     showPlaceholder() {
       return this.placeholder && this.typingIndex < 0
     },
@@ -93,14 +95,9 @@ export default {
         this.typingIndex = index
       }
     },
-  },
-  filters: {
-    normalizeTagItems(items) {
-      return items.map(item => typeof item === 'string' ? {text: item} : item).concat(null)
-    },
     getRemoveHandle(item, index) {
       return item.readOnly ? null : () => this.removeTag(index)
-    },
+    }
   },
   components: {
     tag: require('./tag.vue'),

@@ -13,7 +13,7 @@ let config = {
     },
     module: {
         loaders: [
-            {test: /\.js$/, include: path.resolve(__dirname, 'src/'), loader: 'babel'},
+            {test: /\.js$/, exclude: /node_modules/, loader: 'babel'},
             {test: /\.css$/, loader: 'style!css'},
             {test: /\.vue$/, loader: 'vue'},
         ]
@@ -47,7 +47,7 @@ if (TARGET === 'build') {
     )
 } else if (TARGET === 'dev' || TARGET === 'build:example') {
     config = Object.assign(config, {
-        entry: './src/example.js',
+        entry: './example/index.js',
         output: {
             path: path.resolve(__dirname, 'example'),
             filename: 'example.js'

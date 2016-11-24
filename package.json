@@ -40,15 +40,16 @@
     "eslint": "^3.10.2",
     "eslint-plugin-vue": "^1.0.0",
     "style-loader": "^0.13.0",
-    "vue": "^1.0.21",
+    "vue": "2.1",
     "vue-hot-reload-api": "^1.2.2",
     "vue-html-loader": "^1.0.0",
-    "vue-loader": "^8.2.3",
+    "vue-loader": "^10.0.1",
     "vue-style-loader": "^1.0.0",
+    "vue-template-compiler": "^2.1.3",
     "webpack": "^1.12.9",
     "webpack-dev-server": "^1.14.0"
   },
   "dependencies": {
-    "vuept": "^1.0.0"
+    "vuept": "^1.1.0"
   }
 }
