@@ -6,7 +6,7 @@ new Vue({
     <div>
       <tags-input
       :tags="tags"
-      @change="handleChange"
+      @tags-change="handleChange"
       @focus="handleFocus"
       @blur="handleBlur"
       placeholder="input something"
@@ -26,11 +26,11 @@ new Vue({
         this.tags.splice(index, 1)
       }
     },
-    handleFocus() {
-      console.log('active')
+    handleFocus(...args) {
+      console.log('active', args)
     },
-    handleBlur($el) {
-      console.log(`inactive input with value: ${$el.value}`)
+    handleBlur(...args) {
+      console.log(`inactive`, args)
     }
   },
   components: {

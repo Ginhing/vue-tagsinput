@@ -1,13 +1,21 @@
 <template>
   <div :class="klass.container" @mousedown.self.prevent>
     <template v-for="(index, item) in tags | normalizeTagItems" :track-by="trackBy">
-      <typing :index="index"></typing>
-      <tag :text="item.text" :remove="item | getRemoveHandle index" :invalid="item.invalid">
+      <typing
+        :index="index"
+        :typing="index === typingIndex"
+        :handle-insert="insertTag"
+        :handle-remove="removeTag"
+        :active-other="activeOther"
+        @click="focus(index)"
+        @blur="blur(index)"
+      >
+        <span v-show="index === length && showPlaceholder" :class="klass.placeholder">{{placeholder}}</span>
+      </typing>
+      <tag v-if="index !== length"
+      :text="item.text" :remove="item | getRemoveHandle index" :invalid="item.invalid">
       </tag>
     </template>
-    <typing :index="length">
-      <span v-if="placeholder" :class="klass.placeholder">{{placeholder}}</span>
-    </typing>
   </div>
 </template>
 <style scoped>
@@ -30,7 +38,7 @@
 </style>
 <script>
 import {arr, str, obj} from 'vuept'
-import { _E, klass } from './lib'
+import { klass } from './lib'
 export default {
   props: {
     /**
@@ -45,42 +53,50 @@ export default {
     klass: obj.default(() => klass),
     trackBy: str.default('$index'),
   },
+  data() {
+    return {
+      typingIndex: -1
+    }
+  },
   computed: {
+    showPlaceholder() {
+      return this.placeholder && this.typingIndex < 0
+    },
     length() {
       return this.tags.length
     }
   },
-  events: {
-    [_E `insert`](index, text) {
-      this.insertTag(index, {text})
-    },
-    [_E `activeOther`](index) {
-      index >= 0 &&
-        index <= this.length &&
-        this.$broadcast(_E `active`, index)
-    },
-    [_E `remove`](index) {
-      index > -1 && this.removeTag(index, undefined)
-    }
-  },
   methods: {
+    focus(index) {
+      if (this.typingIndex === -1) {
+        this.$emit('focus', index)
+      }
+      this.typingIndex = index
+    },
+    blur(index) {
+      // it will be false when caused by keyPress events
+      if (index === this.typingIndex) {
+        this.$emit('blur', index)
+        this.typingIndex = -1
+      }
+    },
     removeTag(index) {
-      !this.tags[index].readOnly && this.$emit('change', index, undefined)
+      if (index >= 0 && !this.tags[index].readOnly) {
+        this.$emit('tags-change', index, undefined)
+      }
     },
-    insertTag(index, tag) {
-      this.$emit('change', index, tag)
+    insertTag(index, text) {
+      this.$emit('tags-change', index, {text})
     },
-    // dedupe(tag) {
-    //   if (this.trackBy === '$index') return this.tags.includes(tag)
-    //   else {
-    //     let field = tag[this.trackBy]
-    //     return this.tags.some(item => item[this.trackBy] === field)
-    //   }
-    // }
+    activeOther(index) {
+      if (index >= 0 && index <= this.length) {
+        this.typingIndex = index
+      }
+    },
   },
   filters: {
     normalizeTagItems(items) {
-      return items.map(item => typeof item === 'string' ? {text: item} : item)
+      return items.map(item => typeof item === 'string' ? {text: item} : item).concat(null)
     },
     getRemoveHandle(item, index) {
       return item.readOnly ? null : () => this.removeTag(index)

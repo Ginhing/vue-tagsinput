@@ -1,12 +1,12 @@
 <template>
-  <span :class="klass.gap" @click="begin">
+  <span :class="klass.gap">
     <input type="text"
         :class="klass.input"
         :style="{width: base + charLen(text) + 'ch'}"
         v-el:input
         v-model="text"
         @mousedown="preventNativeActive"
-        @blur="finish(true)"
+        @blur="finish"
         @keydown="keyPress"
     />
     <slot v-if="!typing"></slot>
@@ -27,17 +27,18 @@ input.input {
 }
 </style>
 <script>
-import { KEY_CODE, E, _E } from './lib'
+import { num, bool, func } from 'vuept'
+import { KEY_CODE } from './lib'
 export default {
   props: {
-    index: {
-      type: Number,
-      required: true
-    }
+    index: num.required,
+    typing: bool.required,
+    handleInsert: func.required,
+    handleRemove: func.required,
+    activeOther: func.required
   },
   data() {
     return {
-      typing: false,
       text: ''
     }
   },
@@ -47,38 +48,33 @@ export default {
     },
     klass() {
       return this.$parent.klass
+    },
+    trimText() {
+      return this.text.trim()
     }
   },
   watch: {
     typing(val) {
-      val && this.$nextTick(_ => {
+      val && this.$nextTick(() => {
         let $el = this.$els.input
         $el.focus()
-        this.$dispatch(E `focus`, $el)
       })
-    }
-  },
-  events: {
-    [_E `active`](index) {
-      this.typing = index === this.index
     }
   },
   methods: {
     preventNativeActive(e) {
       if (!this.typing) e.preventDefault()
     },
-    begin() {
-      this.typing = true
+    finish() {
+      this.addTag()
+      this.$emit('blur', this.index)
     },
-    finish(inactive = true) {
-      let result = this.text.trim()
-      if (result) {
-        this.$dispatch(_E `insert`, this.index, result)
+    addTag() {
+      let {trimText} = this
+      if (trimText) {
+        this.handleInsert(this.index, trimText)
         this.text = ''
-      }
-      if (inactive === true) {
-        this.typing = false
-        this.$dispatch(E `blur`, this.$els.input)
+        return trimText
       }
     },
     charLen(str) {
@@ -96,13 +92,16 @@ export default {
       let native = false
 
       if (key === KEY_CODE.RIGHT && valLen === 0) {
-        this.$dispatch(_E `activeOther`, this.index + 1)
+        this.activeOther(this.index + 1)
       } else if (key === KEY_CODE.LEFT && valLen === 0) {
-        this.$dispatch(_E `activeOther`, this.index - 1)
+        this.activeOther(this.index - 1)
       } else if (key === KEY_CODE.BACKSPACE && cursor === 0) {
-        this.$dispatch(_E `remove`, this.index - 1)
+        let index = this.index - 1
+        this.handleRemove(index)
+        this.activeOther(index)
       } else if (key === KEY_CODE.TAB) {
-        this.finish(false)
+        let index = this.index + 1
+        this.addTag() && this.$nextTick(() => this.activeOther(index))
       } else native = true
 
         !native && e.preventDefault()
