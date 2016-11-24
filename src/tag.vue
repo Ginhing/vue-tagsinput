@@ -36,11 +36,11 @@
 }
 </style>
 <script>
-import {str, func, bool} from 'vuept'
+import {str, bool} from 'vuept'
 export default {
   props: {
     text: str.required,
-    remove: func.default(() => {}),
+    remove: [Function, null],
     invalid: bool.default(false),
   },
   computed: {

@@ -2,11 +2,11 @@
   <span :class="klass.gap">
     <input type="text"
         :class="klass.input"
-        :style="{width: base + charLen(text) + 'ch'}"
+        :style="{width: baseWidth + charLen(text) + 'ch'}"
         v-el:input
         v-model="text"
         @mousedown="preventNativeActive"
-        @blur="finish"
+        @blur="finishEditing"
         @keydown="keyPress"
     />
     <slot v-if="!typing"></slot>
@@ -43,7 +43,7 @@ export default {
     }
   },
   computed: {
-    base() {
+    baseWidth() {
       return this.typing ? 2 : 0
     },
     klass() {
@@ -65,7 +65,7 @@ export default {
     preventNativeActive(e) {
       if (!this.typing) e.preventDefault()
     },
-    finish() {
+    finishEditing() {
       this.addTag()
       this.$emit('blur', this.index)
     },
