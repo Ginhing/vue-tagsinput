@@ -1,21 +1,24 @@
 <template>
-  <tags-input
-    :tags="tags"
-    @tags-change="handleChange"
-  ></tags-input>
+  <div>
+    <div>minimal example</div>
+    <tags-input
+      :tags="tags"
+      @tags-change="handleChange"
+    ></tags-input>
+  </div>
 </template>
 
 <script>
 export default {
   data() {
     return {
-      tags: [{text: 'hello', invalid: true, readOnly: true}, {text: 'world'}],
+      tags: ['hello', 'world'],
     }
   },
   methods: {
-    handleChange(index, tag) {
-      if (tag) {
-        this.tags.splice(index, 0, tag)
+    handleChange(index, text) {
+      if (text) {
+        this.tags.splice(index, 0, text)
       } else {
         this.tags.splice(index, 1)
       }

@@ -1,5 +1,5 @@
 <template>
-  <div :class="klass.container" @mousedown.self.prevent>
+  <div :class="klass.container">
     <template v-for="(item, index) in normalizeTagItems">
       <typing
         :index="index"
@@ -88,7 +88,7 @@ export default {
       }
     },
     insertTag(index, text) {
-      this.$emit('tags-change', index, {text})
+      this.$emit('tags-change', index, text)
     },
     activeOther(index) {
       if (index >= 0 && index <= this.length) {

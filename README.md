@@ -7,50 +7,48 @@
 >kerboard supported(left, right, backspace, tab).
 ![](anim.gif)
 
-**TODO: work with Vue 2.0**
-
 ## Requirement
-- vue: `^1.0.0`
+- vue: `^2.1.0`
 
 ## Usage
 ```html
 <div id="example">
     <tags-input
-        :tags.sync="tags"
-        :insert="insertTag"
-        :render="renderTag"
-        :read-only="setRO"
-        :validator="validator"
-        track-by="text"
+        :tags="tags"
+        @tags-change="handleChange"
     ></tags-input>
 </div>
 ```
 
 ## Example
-[Live example](http://www.webpackbin.com/4J2rbEYZZ)
+[Live example](http://www.webpackbin.com/Vyc_H61fG)
 
 ## Props
-- tags(array, required): to contain your tags
+- tags(array\<{ text: string, readOnly: ?boolean, invalid: ?boolean }>, required):
+your tags to render
+- placeholder(string): a hint to the user
 - klass(object): override the class name (see below)
-- insert(func): transform the text of tag-object before insert your tags-array
-- render(func): transform your tag-object into a text to display
-- readOnly(func): set your tag-object read only or not
-- validator(func|string): set the DOM element of tag having attribute 'invalid' or not
-- trackBy(string): a field of tag-object to dedupe.
 
 ## Events
-- focus.vue-tagsinput
-- blur.vue-tagsinput
+- tags-change: (index: number, text: ?string) => void
+  `text` will be undefined if the tag was removed
+- focus: (index: number) => void
+- blur: (index: number) => void
 
 ## Class Names
 ```javascript
 {
     container: 'tags-input',
     input: 'input',
+    placeholder: 'placeholder',
     gap: 'gap',
     tag: 'tag'
 }
 ```
+
+## Migration from 0.x
+Because of the two-way props was obsoleted in Vue@2, we should deal with tags by one-way props and onChange callback explicitly.
+So most states will be handled in your scope. See the [full example](./example/full.vue).
 
 ## License
 
