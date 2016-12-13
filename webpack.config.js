@@ -2,7 +2,7 @@
 const path = require('path')
 const webpack = require('webpack')
 
-const TARGET = process.env.npm_lifecycle_event
+const {NODE_ENV} = process.env
 
 let config = {
     entry: './src/index.js',
@@ -32,8 +32,7 @@ let config = {
 }
 
 // for production build
-if (TARGET === 'build') {
-    process.env.NODE_ENV = 'production'
+if (NODE_ENV === 'production') {
     config.externals = {
         vue: 'commonjs vue'
     },
@@ -45,7 +44,7 @@ if (TARGET === 'build') {
             }
         })
     )
-} else if (TARGET === 'dev' || TARGET === 'build:example') {
+} else if (NODE_ENV === 'development') {
     config = Object.assign(config, {
         entry: './example/index.js',
         output: {
