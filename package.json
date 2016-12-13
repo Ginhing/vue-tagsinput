@@ -1,6 +1,6 @@
 {
   "name": "vue-tagsinput",
-  "version": "2.0.0-beta1",
+  "version": "2.0.0-beta2",
   "description": "a tags input component based on Vue.js",
   "main": "dist/vue-tagsinput.js",
   "files": [
@@ -8,7 +8,7 @@
     "src/"
   ],
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "eslint src/ --ext vue --ext js",
     "build": "NODE_ENV=production webpack",
     "prepublish": "npm run build",
     "dev": "NODE_ENV=development webpack-dev-server --hot --inline"
