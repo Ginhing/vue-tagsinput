@@ -16,7 +16,6 @@ let config = {
             {test: /\.js$/, exclude: /node_modules/, loader: 'babel'},
             {test: /\.css$/, loader: 'style!css'},
             {test: /\.vue$/, loader: 'vue'},
-            {test: /\.svg$/, loader: 'url?limit=1000'}
         ]
     },
     plugins: [],

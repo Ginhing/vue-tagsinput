@@ -1,10 +1,12 @@
 <template>
   <span :class="klass.tag" :invalid="invalid">
     {{text}}
-    <span v-if="remove"
+    <img
+      v-if="remove"
       class="hl-click"
       @click="remove"
-    ></span>
+      :src="crossIcon" alt="close"
+    />
   </span>
 </template>
 <style scoped>
@@ -15,6 +17,7 @@
   font-weight: normal;
   font-size: 1.1em;
   padding: 0 0.5ch;
+  vertical-align: middle
 }
 
 .tag[invalid] {
@@ -22,13 +25,8 @@
 }
 
 .hl-click {
+  width: 10px;
   cursor: pointer;
-}
-
-.hl-click::after {
-  color: rgba(0, 0, 0, 0.6);
-  content: "\2a2f";
-  padding-left: 1px;
 }
 
 .hl-click:hover:active {
@@ -37,11 +35,17 @@
 </style>
 <script>
 import {str, bool} from 'vuept'
+
+const CROSS_ICON = require('./assets/ic_close_black_16px.svg')
+
 export default {
   props: {
     text: str.required,
     remove: [Function, null],
     invalid: bool.default(false),
+  },
+  data() {
+    return {crossIcon: CROSS_ICON}
   },
   computed: {
     klass() {
