@@ -1,3 +1,4 @@
+>## This Project Is Deprecated
 # vue-tagsinput
 [![][npm-image]][npm-url]
 
